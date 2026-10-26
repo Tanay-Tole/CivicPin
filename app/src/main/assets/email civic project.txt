@@ -1,0 +1,393 @@
+BENGALURU ALL-AREAS CIVIC ESCALATION DIRECTORY (WATER & GARBAGE)
+================================================================
+
+=======================
+1. SOUTH BENGALURU
+=======================
+
+Koramangala
+water: 
+  To: callcenter@bwssb.gov.in, aeese1@bwssb.gov.in
+  CC: bwssbcallcenter@gmail.com, pro@bwssb.gov.in
+  BCC: 
+
+garbage: 
+  To: jc.south@bbmp.gov.in, contactusbbmp@gmail.com
+  CC: comm@bbmp.gov.in, dceeswm@gmail.com
+  BCC: 
+
+
+BTM Layout
+water: 
+  To: callcenter@bwssb.gov.in, ees2@bwssb.gov.in
+  CC: bwssbcallcenter@gmail.com, pro@bwssb.gov.in
+  BCC: 
+
+garbage: 
+  To: jc.south@bbmp.gov.in, jc.bommanahalli@bbmp.gov.in
+  CC: comm@bbmp.gov.in, contactusbbmp@gmail.com
+  BCC: 
+
+
+HSR Layout
+water: 
+  To: callcenter@bwssb.gov.in, aeese1@bwssb.gov.in
+  CC: bwssbcallcenter@gmail.com, pro@bwssb.gov.in
+  BCC: 
+
+garbage: 
+  To: jc.bommanahalli@bbmp.gov.in, contactusbbmp@gmail.com
+  CC: comm@bbmp.gov.in, dceeswm@gmail.com
+  BCC: 
+
+
+Jayanagar
+water: 
+  To: callcenter@bwssb.gov.in, ees2@bwssb.gov.in
+  CC: bwssbcallcenter@gmail.com, pro@bwssb.gov.in
+  BCC: 
+
+garbage: 
+  To: jc.south@bbmp.gov.in, contactusbbmp@gmail.com
+  CC: comm@bbmp.gov.in, dceeswm@gmail.com
+  BCC: 
+
+
+JP Nagar (Phases 1 to 9)
+water: 
+  To: callcenter@bwssb.gov.in, ees2@bwssb.gov.in
+  CC: bwssbcallcenter@gmail.com, pro@bwssb.gov.in
+  BCC: 
+
+garbage: 
+  To: jc.south@bbmp.gov.in, jc.bommanahalli@bbmp.gov.in
+  CC: comm@bbmp.gov.in, dceeswm@gmail.com
+  BCC: 
+
+
+Basavanagudi / Banashankari
+water: 
+  To: callcenter@bwssb.gov.in, eesw1@bwssb.gov.in
+  CC: bwssbcallcenter@gmail.com, pro@bwssb.gov.in
+  BCC: 
+
+garbage: 
+  To: jc.south@bbmp.gov.in, contactusbbmp@gmail.com
+  CC: comm@bbmp.gov.in, dceeswm@gmail.com
+  BCC: 
+
+
+Bommanahalli / Begur / Hongasandra
+water: 
+  To: callcenter@bwssb.gov.in, ees2@bwssb.gov.in
+  CC: bwssbcallcenter@gmail.com, pro@bwssb.gov.in
+  BCC: 
+
+garbage: 
+  To: jc.bommanahalli@bbmp.gov.in, contactusbbmp@gmail.com
+  CC: comm@bbmp.gov.in, dceeswm@gmail.com
+  BCC: 
+
+
+Electronic City / Hulimavu / Bannerghatta Road
+water: 
+  To: callcenter@bwssb.gov.in, ees2@bwssb.gov.in
+  CC: bwssbcallcenter@gmail.com, pro@bwssb.gov.in
+  BCC: 
+
+garbage: 
+  To: jc.bommanahalli@bbmp.gov.in, contactusbbmp@gmail.com
+  CC: comm@bbmp.gov.in, dceeswm@gmail.com
+  BCC: 
+
+
+Padmanabhanagar / Kumaraswamy Layout
+water: 
+  To: callcenter@bwssb.gov.in, eesw1@bwssb.gov.in
+  CC: bwssbcallcenter@gmail.com, pro@bwssb.gov.in
+  BCC: 
+
+garbage: 
+  To: jc.south@bbmp.gov.in, contactusbbmp@gmail.com
+  CC: comm@bbmp.gov.in, dceeswm@gmail.com
+  BCC: 
+
+
+=======================
+2. EAST BENGALURU
+=======================
+
+Marathahalli
+water: 
+  To: callcenter@bwssb.gov.in, aeee2@bwssb.gov.in
+  CC: eee@bwssb.gov.in, bwssbcallcenter@gmail.com
+  BCC: 
+
+garbage: 
+  To: jc.mahadevapura@bbmp.gov.in, contactusbbmp@gmail.com
+  CC: comm@bbmp.gov.in, dceeswm@gmail.com
+  BCC: 
+
+
+Whitefield / Kadugodi / ITPL
+water: 
+  To: callcenter@bwssb.gov.in, aeee2@bwssb.gov.in
+  CC: eee@bwssb.gov.in, bwssbcallcenter@gmail.com
+  BCC: 
+
+garbage: 
+  To: jc.mahadevapura@bbmp.gov.in, contactusbbmp@gmail.com
+  CC: comm@bbmp.gov.in, dceeswm@gmail.com
+  BCC: 
+
+
+Bellandur / Sarjapur Road / Haralur
+water: 
+  To: callcenter@bwssb.gov.in, aeese1@bwssb.gov.in
+  CC: eee@bwssb.gov.in, bwssbcallcenter@gmail.com
+  BCC: 
+
+garbage: 
+  To: jc.mahadevapura@bbmp.gov.in, contactusbbmp@gmail.com
+  CC: comm@bbmp.gov.in, dceeswm@gmail.com
+  BCC: 
+
+
+Indiranagar / Domlur / HAL
+water: 
+  To: callcenter@bwssb.gov.in, eee@bwssb.gov.in
+  CC: bwssbcallcenter@gmail.com, pro@bwssb.gov.in
+  BCC: 
+
+garbage: 
+  To: jc.east@bbmp.gov.in, contactusbbmp@gmail.com
+  CC: comm@bbmp.gov.in, dceeswm@gmail.com
+  BCC: 
+
+
+KR Puram / Mahadevapura / Hoodi
+water: 
+  To: callcenter@bwssb.gov.in, aeee4@bwssb.gov.in
+  CC: eee@bwssb.gov.in, bwssbcallcenter@gmail.com
+  BCC: 
+
+garbage: 
+  To: jc.mahadevapura@bbmp.gov.in, contactusbbmp@gmail.com
+  CC: comm@bbmp.gov.in, dceeswm@gmail.com
+  BCC: 
+
+
+CV Raman Nagar / Old Airport Road
+water: 
+  To: callcenter@bwssb.gov.in, eee@bwssb.gov.in
+  CC: bwssbcallcenter@gmail.com, pro@bwssb.gov.in
+  BCC: 
+
+garbage: 
+  To: jc.east@bbmp.gov.in, contactusbbmp@gmail.com
+  CC: comm@bbmp.gov.in, dceeswm@gmail.com
+  BCC: 
+
+
+=======================
+3. NORTH BENGALURU
+=======================
+
+Kothanur / Thanisandra
+water: 
+  To: callcenter@bwssb.gov.in, aeeev1@bwssb.gov.in
+  CC: eee@bwssb.gov.in, bwssbcallcenter@gmail.com
+  BCC: 
+
+garbage: 
+  To: jc.byatarayanapura@bbmp.gov.in, contactusbbmp@gmail.com
+  CC: comm@bbmp.gov.in, dceeswm@gmail.com
+  BCC: 
+
+
+Hennur / HRBR Layout / Kalyan Nagar
+water: 
+  To: callcenter@bwssb.gov.in, aeeev1@bwssb.gov.in
+  CC: eee@bwssb.gov.in, bwssbcallcenter@gmail.com
+  BCC: 
+
+garbage: 
+  To: jc.east@bbmp.gov.in, contactusbbmp@gmail.com
+  CC: comm@bbmp.gov.in, dceeswm@gmail.com
+  BCC: 
+
+
+Hebbal / RT Nagar / Ganganagar
+water: 
+  To: callcenter@bwssb.gov.in, eec@bwssb.gov.in
+  CC: bwssbcallcenter@gmail.com, pro@bwssb.gov.in
+  BCC: 
+
+garbage: 
+  To: jc.east@bbmp.gov.in, contactusbbmp@gmail.com
+  CC: comm@bbmp.gov.in, dceeswm@gmail.com
+  BCC: 
+
+
+Yelahanka (New & Old Town)
+water: 
+  To: callcenter@bwssb.gov.in, eec@bwssb.gov.in
+  CC: bwssbcallcenter@gmail.com, pro@bwssb.gov.in
+  BCC: 
+
+garbage: 
+  To: jc.yelahanka@bbmp.gov.in, contactusbbmp@gmail.com
+  CC: comm@bbmp.gov.in, dceeswm@gmail.com
+  BCC: 
+
+
+Sahakar Nagar / Vidyaranyapura / Byatarayanapura
+water: 
+  To: callcenter@bwssb.gov.in, eec@bwssb.gov.in
+  CC: bwssbcallcenter@gmail.com, pro@bwssb.gov.in
+  BCC: 
+
+garbage: 
+  To: jc.byatarayanapura@bbmp.gov.in, contactusbbmp@gmail.com
+  CC: comm@bbmp.gov.in, dceeswm@gmail.com
+  BCC: 
+
+
+Banaswadi / Kammanahalli / Ramamurthy Nagar
+water: 
+  To: callcenter@bwssb.gov.in, aeeev1@bwssb.gov.in
+  CC: eee@bwssb.gov.in, bwssbcallcenter@gmail.com
+  BCC: 
+
+garbage: 
+  To: jc.east@bbmp.gov.in, contactusbbmp@gmail.com
+  CC: comm@bbmp.gov.in, dceeswm@gmail.com
+  BCC: 
+
+
+=======================
+4. CENTRAL BENGALURU
+=======================
+
+MG Road / Brigade Road / Shanthala Nagar
+water: 
+  To: callcenter@bwssb.gov.in, eec@bwssb.gov.in
+  CC: bwssbcallcenter@gmail.com, pro@bwssb.gov.in
+  BCC: 
+
+garbage: 
+  To: jc.east@bbmp.gov.in, contactusbbmp@gmail.com
+  CC: comm@bbmp.gov.in, dceeswm@gmail.com
+  BCC: 
+
+
+Shivajinagar / Frazer Town / Commercial Street
+water: 
+  To: callcenter@bwssb.gov.in, aeec3@bwssb.gov.in
+  CC: eec@bwssb.gov.in, bwssbcallcenter@gmail.com
+  BCC: 
+
+garbage: 
+  To: jc.east@bbmp.gov.in, contactusbbmp@gmail.com
+  CC: comm@bbmp.gov.in, dceeswm@gmail.com
+  BCC: 
+
+
+Malleswaram / Sadashivanagar / Vasanth Nagar
+water: 
+  To: callcenter@bwssb.gov.in, eenw@bwssb.gov.in
+  CC: eec@bwssb.gov.in, bwssbcallcenter@gmail.com
+  BCC: 
+
+garbage: 
+  To: jc.west@bbmp.gov.in, contactusbbmp@gmail.com
+  CC: comm@bbmp.gov.in, dceeswm@gmail.com
+  BCC: 
+
+
+Chamarajpet / Chickpet / Majestic (Gandhinagar)
+water: 
+  To: callcenter@bwssb.gov.in, aeec1@bwssb.gov.in
+  CC: eec@bwssb.gov.in, bwssbcallcenter@gmail.com
+  BCC: 
+
+garbage: 
+  To: jc.west@bbmp.gov.in, contactusbbmp@gmail.com
+  CC: comm@bbmp.gov.in, dceeswm@gmail.com
+  BCC: 
+
+
+=======================
+5. WEST BENGALURU
+=======================
+
+Rajajinagar / Basaveshwaranagar
+water: 
+  To: callcenter@bwssb.gov.in, eenw@bwssb.gov.in
+  CC: bwssbcallcenter@gmail.com, pro@bwssb.gov.in
+  BCC: 
+
+garbage: 
+  To: jc.west@bbmp.gov.in, contactusbbmp@gmail.com
+  CC: comm@bbmp.gov.in, dceeswm@gmail.com
+  BCC: 
+
+
+Vijayanagar / RPC Layout / Chandra Layout
+water: 
+  To: callcenter@bwssb.gov.in, aeenw2@bwssb.gov.in
+  CC: eenw@bwssb.gov.in, bwssbcallcenter@gmail.com
+  BCC: 
+
+garbage: 
+  To: jc.west@bbmp.gov.in, contactusbbmp@gmail.com
+  CC: comm@bbmp.gov.in, dceeswm@gmail.com
+  BCC: 
+
+
+Nagarbhavi / Kengeri / Nayandahalli
+water: 
+  To: callcenter@bwssb.gov.in, aeenw2@bwssb.gov.in
+  CC: eenw@bwssb.gov.in, bwssbcallcenter@gmail.com
+  BCC: 
+
+garbage: 
+  To: jc.rrnagar@bbmp.gov.in, contactusbbmp@gmail.com
+  CC: comm@bbmp.gov.in, dceeswm@gmail.com
+  BCC: 
+
+
+Rajarajeshwari Nagar (RR Nagar)
+water: 
+  To: callcenter@bwssb.gov.in, aeew_2_1@bwssb.gov.in
+  CC: eenw@bwssb.gov.in, bwssbcallcenter@gmail.com
+  BCC: 
+
+garbage: 
+  To: jc.rrnagar@bbmp.gov.in, contactusbbmp@gmail.com
+  CC: comm@bbmp.gov.in, dceeswm@gmail.com
+  BCC: 
+
+
+Yeshwanthpur / Peenya / Jalahalli / Dasarahalli
+water: 
+  To: callcenter@bwssb.gov.in, eenw@bwssb.gov.in
+  CC: bwssbcallcenter@gmail.com, pro@bwssb.gov.in
+  BCC: 
+
+garbage: 
+  To: jc.dasarahalli@bbmp.gov.in, contactusbbmp@gmail.com
+  CC: comm@bbmp.gov.in, dceeswm@gmail.com
+  BCC: 
+
+
+================================================================
+CENTRAL HELPLINES & ESCALATION CONTACTS
+- BWSSB 24x7 Helpline: 1916 (Toll-Free)
+- BWSSB WhatsApp Grievance: +91 87622 28888
+- BWSSB Chairman Email: chairman@bwssb.gov.in
+- BBMP 24x7 Central Control Room: 080-2266 0000 / 1533
+- BBMP Commissioner Email: comm@bbmp.gov.in
+- BBMP Solid Waste Management (SWM): dceeswm@gmail.com
+- BBMP Sahaaya Grievance WhatsApp: +91 94806 85700
+================================================================

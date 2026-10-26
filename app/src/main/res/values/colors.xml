@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Bengaluru Palette -->
+    <color name="deep_indigo">#202A44</color>
+    <color name="bengaluru_purple">#7457C8</color>
+    <color name="leaf_green">#32876B</color>
+    <color name="warm_cream">#F7F4ED</color>
+    <color name="rain_blue">#4F8CA8</color>
+    <color name="soft_coral">#E88B78</color>
+    <color name="text_dark">#20232B</color>
+    <color name="text_muted">#6C757D</color>
+
+    <!-- UI Standard Colors -->
+    <color name="primary">#7457C8</color>
+    <color name="primary_variant">#202A44</color>
+    <color name="secondary">#32876B</color>
+    <color name="background">#F7F4ED</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="error">#E88B78</color>
+
+    <!-- Category Colors -->
+    <color name="cat_garbage">#E67E22</color>
+    <color name="cat_water">#2980B9</color>
+    <color name="cat_potholes">#C0392B</color>
+    <color name="cat_others">#7F8C8D</color>
+
+    <!-- Status Badge Colors -->
+    <color name="status_draft">#7F8C8D</color>
+    <color name="status_ready">#F39C12</color>
+    <color name="status_composer">#2980B9</color>
+    <color name="status_submitted">#27AE60</color>
+    <color name="status_resolved">#8E44AD</color>
+
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>

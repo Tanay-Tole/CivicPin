@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Outer Garden City Arc -->
+    <path
+        android:fillColor="#32876B"
+        android:pathData="M22,78 C18,65 26,52 38,60 C29,70 22,78 22,78 Z" />
+
+    <path
+        android:fillColor="#32876B"
+        android:pathData="M86,78 C90,65 82,52 70,60 C79,70 86,78 86,78 Z" />
+
+    <!-- Vidhana Soudha Dome Silhouette -->
+    <path
+        android:fillColor="#4F8CA8"
+        android:pathData="M42,48 H66 V36 H62 V30 H58 V25 H54 L50,25 V30 H46 V36 H42 Z" />
+
+    <path
+        android:fillColor="#F7F4ED"
+        android:pathData="M53,25 L54,20 L55,25 Z" />
+
+    <!-- Main Civic Location Pin -->
+    <path
+        android:fillColor="#7457C8"
+        android:pathData="M54,24 C40,24 29,35 29,49 C29,65 54,90 54,90 C54,90 79,65 79,49 C79,35 68,24 54,24 Z" />
+
+    <!-- Inner White Badge -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M54,35 A13,13 0 1,1 53.9,35 Z" />
+
+    <!-- Civic Checkmark (Issue Solved) -->
+    <path
+        android:fillColor="#32876B"
+        android:pathData="M48,48 L43,43 L40,46 L48,54 L66,36 L63,33 Z" />
+
+</vector>

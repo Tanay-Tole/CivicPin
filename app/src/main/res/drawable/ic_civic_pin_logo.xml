@@ -1,0 +1,49 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+
+    <!-- Outer Citizen Alliance Ring -->
+    <path
+        android:fillColor="#7457C8"
+        android:pathData="M60,10 A50,50 0 1,1 59.9,10 Z" />
+
+    <path
+        android:fillColor="#202A44"
+        android:pathData="M60,16 A44,44 0 1,1 59.9,16 Z" />
+
+    <!-- Garden City Jacaranda Leaves Arc -->
+    <path
+        android:fillColor="#32876B"
+        android:pathData="M25,85 C20,70 30,55 42,65 C32,75 25,85 25,85 Z" />
+
+    <path
+        android:fillColor="#32876B"
+        android:pathData="M95,85 C100,70 90,55 78,65 C88,75 95,85 95,85 Z" />
+
+    <!-- Bengaluru Vidhana Soudha Dome Background Silhouette -->
+    <path
+        android:fillColor="#4F8CA8"
+        android:pathData="M45,52 H75 V38 H70 V32 H65 V26 H60 L55,26 V32 H50 V38 H45 Z" />
+
+    <path
+        android:fillColor="#F7F4ED"
+        android:pathData="M58,26 L60,20 L62,26 Z" />
+
+    <!-- Sharp Civic Location Pin -->
+    <path
+        android:fillColor="#7457C8"
+        android:pathData="M60,25 C45,25 33,37 33,52 C33,70 60,98 60,98 C60,98 87,70 87,52 C87,37 75,25 60,25 Z" />
+
+    <!-- Inner White Circle in Pin -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M60,37 A15,15 0 1,1 59.9,37 Z" />
+
+    <!-- Action Checkmark (Problem Solved) -->
+    <path
+        android:fillColor="#32876B"
+        android:pathData="M54,52 L48,46 L44,50 L54,60 L74,40 L70,36 Z" />
+
+</vector>

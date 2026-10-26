@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Civic Pin</string>
+    <string name="tagline">Namma Bengaluru. Namma Responsibility.</string>
+    <string name="sub_tagline">Spot it. Pin it. Report it.</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_report">Report</string>
+    <string name="nav_map">Map</string>
+    <string name="nav_history">History</string>
+    <string name="nav_profile">Profile</string>
+
+    <!-- Dashboard -->
+    <string name="btn_report_issue">+ Report an Issue</string>
+    <string name="btn_fast_manual_report">⚡ Fast Manual Report (Self Pin)</string>
+    <string name="stat_total">Total Reports</string>
+    <string name="stat_drafts">Drafts</string>
+    <string name="stat_composer">Composer Opened</string>
+    <string name="stat_submitted">Submitted</string>
+    <string name="stat_resolved">Resolved</string>
+    <string name="recent_activity">Recent Reports</string>
+    <string name="no_recent_reports">No civic reports yet. Tap \'+ Report an Issue\' to start!</string>
+
+    <!-- Reporting Steps -->
+    <string name="step_photo">1. Photograph</string>
+    <string name="step_ai">2. AI Check</string>
+    <string name="step_location">3. Location Pinning</string>
+    <string name="step_route">4. Department</string>
+    <string name="step_email">5. Complaint Email</string>
+
+    <!-- Camera / Image -->
+    <string name="take_photo">Take Photo</string>
+    <string name="select_gallery">Select from Gallery</string>
+    <string name="retake_photo">Retake Photo</string>
+    <string name="continue_btn">Continue with AI Check</string>
+    <string name="btn_skip_to_manual">Manual Pin &amp; Skip AI</string>
+
+    <!-- AI Classification -->
+    <string name="ai_detecting">Analyzing issue with TensorFlow Lite...</string>
+    <string name="ai_detected">AI detected: %1$s</string>
+    <string name="ai_confidence">Confidence: %1$d%%</string>
+    <string name="ai_is_correct">Is this classification correct?</string>
+    <string name="btn_yes_continue">Yes, Continue</string>
+    <string name="btn_change_category">Change Category</string>
+    <string name="ai_low_confidence">We\'re not completely sure about this issue. Please select the correct category.</string>
+    <string name="ai_others_msg">No supported civic issue was confidently identified. You can manually pick a category below or retake the photo.</string>
+
+    <!-- Categories -->
+    <string name="cat_garbage_name">Garbage Accumulation</string>
+    <string name="cat_water_name">Water Leakage / Sewage</string>
+    <string name="cat_potholes_name">Potholes / Road Damage</string>
+    <string name="cat_others_name">Other / No Supported Issue</string>
+
+    <!-- Issue Subtypes -->
+    <string name="subtype_prompt">Select Issue Subtype:</string>
+    <string name="subtype_water_leak">Water pipe leakage</string>
+    <string name="subtype_sewage">Sewage overflow</string>
+    <string name="subtype_drain">Blocked or overflowing drain</string>
+    <string name="subtype_unsure">Unsure / General water problem</string>
+
+    <!-- Location -->
+    <string name="location_title">Pin Location on Map (Tap map to move pin)</string>
+    <string name="location_detecting">Fetching location...</string>
+    <string name="btn_confirm_location">Confirm Location</string>
+    <string name="btn_adjust_pin">Tap Map to Place Pin</string>
+    <string name="btn_use_current_location">Use Current Location</string>
+    <string name="locality_prompt">Locality / Area:</string>
+    <string name="select_locality">Select Locality</string>
+    <string name="search_locality">Search Locality...</string>
+    <string name="btn_direct_email">Direct Email Draft ✉️</string>
+
+    <!-- Department Routing -->
+    <string name="suggested_department">Suggested Department</string>
+    <string name="routing_reason">Routing based on Bengaluru escalation directory</string>
+    <string name="to_recipients">To Recipients:</string>
+    <string name="cc_recipients">CC Recipients:</string>
+    <string name="btn_edit_recipients">Edit Recipients</string>
+
+    <!-- Complaint Email -->
+    <string name="email_preview_title">Review Complaint Email</string>
+    <string name="email_subject_label">Subject:</string>
+    <string name="email_body_label">Body:</string>
+    <string name="user_description_hint">Add additional details about the issue (optional)...</string>
+    <string name="btn_open_email">Open Email App</string>
+
+    <!-- Submission Dialog -->
+    <string name="dialog_submission_title">Did you send this complaint?</string>
+    <string name="dialog_submission_msg">Opening your email app does not automatically deliver the complaint. Please confirm if you sent it.</string>
+    <string name="btn_mark_submitted">Yes, Mark as Submitted</string>
+    <string name="btn_keep_draft">No, Keep as Draft</string>
+    <string name="btn_reopen_email">Open Email Again</string>
+
+    <!-- History & Map -->
+    <string name="search_reports">Search reports...</string>
+    <string name="filter_all">All</string>
+    <string name="report_detail">Report Details</string>
+    <string name="timeline_title">Report Timeline</string>
+    <string name="user_notes_label">User Notes:</string>
+    <string name="add_note">Add Follow-up Note</string>
+    <string name="btn_mark_resolved">Mark as Resolved</string>
+    <string name="btn_delete">Delete Report</string>
+    <string name="confirm_delete_msg">Are you sure you want to delete this report permanently?</string>
+
+    <!-- Profile & Settings -->
+    <string name="profile_title">User Profile</string>
+    <string name="display_name_hint">Your Display Name</string>
+    <string name="contact_email_hint">Your Email Address</string>
+    <string name="contact_phone_hint">Your Phone Number</string>
+    <string name="language_setting">Language / ಭಾಷೆ</string>
+    <string name="confidence_threshold">AI Confidence Threshold (%1$d%%)</string>
+    <string name="signature_setting">Default Email Signature</string>
+    <string name="btn_clear_data">Clear Local Data</string>
+    <string name="btn_export_data">Export History (JSON)</string>
+    <string name="about_title">About Civic Pin</string>
+    <string name="disclaimer">Civic Pin is an independent civic reporting tool and is not an official Bengaluru government application.</string>
+
+    <!-- Easter Eggs & Memes -->
+    <string name="ee_namma_ooru">Namma Ooru. Namma Responsibility.</string>
+    <string name="ee_coffee_toast">One small step for a better Bengaluru. ☕</string>
+    <string name="kannada_greeting">ನಮ್ಮ ಬೆಂಗಳೂರು</string>
+
+    <!-- Errors -->
+    <string name="error_no_email_app">No compatible email application found on device.</string>
+    <string name="error_location_disabled">Location services are disabled. Please enable GPS.</string>
+    <string name="error_camera_failed">Failed to open camera preview.</string>
+</resources>

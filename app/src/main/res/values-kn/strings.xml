@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ಸಿವಿಕ್ ಪಿನ್</string>
+    <string name="tagline">ನಮ್ಮ ಬೆಂಗಳೂರು. ನಮ್ಮ ಜವಾಬ್ದಾರಿ.</string>
+    <string name="sub_tagline">ಗುರುತಿಸಿ. ಪಿನ್ ಮಾಡಿ. ವರದಿ ಮಾಡಿ.</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">ಮುಖಪುಟ</string>
+    <string name="nav_report">ವರದಿ ಮಾಡಿ</string>
+    <string name="nav_map">ನಕ್ಷೆ</string>
+    <string name="nav_history">ಇತಿಹಾಸ</string>
+    <string name="nav_profile">ಪ್ರೊಫೈಲ್</string>
+
+    <!-- Dashboard -->
+    <string name="btn_report_issue">+ ಸಮಸ್ಯೆ ವರದಿ ಮಾಡಿ</string>
+    <string name="btn_fast_manual_report">⚡ ನೇರ ವರದಿ (ಸ್ವಂತ ಪಿನ್)</string>
+    <string name="stat_total">ಒಟ್ಟು ವರದಿಗಳು</string>
+    <string name="stat_drafts">ಕರಡುಗಳು</string>
+    <string name="stat_composer">ಇಮೇಲ್ ತೆರೆದಿದೆ</string>
+    <string name="stat_submitted">ಸಲ್ಲಿಸಲಾಗಿದೆ</string>
+    <string name="stat_resolved">ಬಗೆಹರಿಸಲಾಗಿದೆ</string>
+    <string name="recent_activity">ಇತ್ತೀಚಿನ ವರದಿಗಳು</string>
+    <string name="no_recent_reports">ಇನ್ನೂ ವರದಿಗಳಿಲ್ಲ. ಪ್ರಾರಂಭಿಸಲು \'+ ಸಮಸ್ಯೆ ವರದಿ ಮಾಡಿ\' ಒತ್ತಿ!</string>
+
+    <!-- Reporting Steps -->
+    <string name="step_photo">೧. ಫೋಟೋ</string>
+    <string name="step_ai">೨. ಎಐ ಪರಿಶೀಲನೆ</string>
+    <string name="step_location">೩. ಸ್ಥಳ ಪಿನ್ ಮಾಡಿ</string>
+    <string name="step_route">೪. ಇಲಾಖೆ</string>
+    <string name="step_email">೫. ದೂರು ಇಮೇಲ್</string>
+
+    <!-- Camera / Image -->
+    <string name="take_photo">ಫೋಟೋ ತೆಗೆಯಿರಿ</string>
+    <string name="select_gallery">ಗ್ಯಾಲರಿಯಿಂದ ಆಯ್ಕೆ ಮಾಡಿ</string>
+    <string name="retake_photo">ಮತ್ತೆ ಫೋಟೋ ತೆಗೆಯಿರಿ</string>
+    <string name="continue_btn">ಮುಂದುವರಿಯಿರಿ</string>
+    <string name="btn_skip_to_manual">ಹಸ್ತಚಾಲಿತ ಪಿನ್ (ಎಐ ಬಿಟ್ಟು)</string>
+
+    <!-- AI Classification -->
+    <string name="ai_detecting">ಟೆನ್ಸರ್‌ಫ್ಲೋ ಲೈಟ್ ಮೂಲಕ ಪರಿಶೀಲಿಸಲಾಗುತ್ತಿದೆ...</string>
+    <string name="ai_detected">ಎಐ ಪತ್ತೆಹಚ್ಚಿದೆ: %1$s</string>
+    <string name="ai_confidence">ವಿಶ್ವಾಸಾರ್ಹತೆ: %1$d%%</string>
+    <string name="ai_is_correct">ಈ ವರ್ಗೀಕರಣ ಸರಿಯೇ?</string>
+    <string name="btn_yes_continue">ಹೌದು, ಮುಂದುವರಿಯಿರಿ</string>
+    <string name="btn_change_category">ವರ್ಗ ಬದಲಾಯಿಸಿ</string>
+    <string name="ai_low_confidence">ಈ ಸಮಸ್ಯೆಯ ಬಗ್ಗೆ ನಮಗೆ ಸಂಪೂರ್ಣ ಖಚಿತತೆಯಿಲ್ಲ. ದಯವಿಟ್ಟು ಸರಿಯಾದ ವರ್ಗವನ್ನು ಆಯ್ಕೆಮಾಡಿ.</string>
+    <string name="ai_others_msg">ಬೆಂಬಲಿತ ನಾಗರಿಕ ಸಮಸ್ಯೆ ಪತ್ತೆಯಾಗಿಲ್ಲ. ನೀವು ಹಸ್ತಚಾಲಿತವಾಗಿ ಕೆಳಗೆ ಆಯ್ಕೆ ಮಾಡಬಹುದು.</string>
+
+    <!-- Categories -->
+    <string name="cat_garbage_name">ಕಸದ ರಾಶಿ</string>
+    <string name="cat_water_name">ನೀರು ಸೋರಿಕೆ / ಒಳಚರಂಡಿ</string>
+    <string name="cat_potholes_name">ರಸ್ತೆ ಗುಂಡಿ / ರಸ್ತೆ ಹಾನಿ</string>
+    <string name="cat_others_name">ಇತರೆ / ಬೆಂಬಲವಿಲ್ಲದ ಸಮಸ್ಯೆ</string>
+
+    <!-- Subtypes -->
+    <string name="subtype_prompt">ಸಮಸ್ಯೆಯ ಉಪಪ್ರಕಾರ ಆಯ್ಕೆಮಾಡಿ:</string>
+    <string name="subtype_water_leak">ಕುಡಿಯುವ ನೀರಿನ ಪೈಪ್ ಸೋರಿಕೆ</string>
+    <string name="subtype_sewage">ಒಳಚರಂಡಿ ನೀರು ಹರಿಯುವುದು</string>
+    <string name="subtype_drain">ಚರಂಡಿ ಬ್ಲಾಕ್ ಆಗಿದೆ</string>
+    <string name="subtype_unsure">ಸಾಮಾನ್ಯ ನೀರಿನ ಸಮಸ್ಯೆ</string>
+
+    <!-- Location -->
+    <string name="location_title">ನಕ್ಷೆಯಲ್ಲಿ ಪಿನ್ ಮಾಡಿ (ಪಿನ್ ಸರಿಸಲು ನಕ್ಷೆಯನ್ನು ಒತ್ತಿ)</string>
+    <string name="location_detecting">ಸ್ಥಳ ಪತ್ತೆಹಚ್ಚಲಾಗುತ್ತಿದೆ...</string>
+    <string name="btn_confirm_location">ಸ್ಥಳ ದೃಢೀಕರಿಸಿ</string>
+    <string name="btn_adjust_pin">ಪಿನ್ ಸರಿಹೊಂದಿಸಿ</string>
+    <string name="btn_use_current_location">ಪ್ರಸ್ತುತ ಸ್ಥಳ ಬಳಸಿ</string>
+    <string name="locality_prompt">ಪ್ರದೇಶ / ಏರಿಯಾ:</string>
+    <string name="select_locality">ಪ್ರದೇಶ ಆಯ್ಕೆಮಾಡಿ</string>
+    <string name="search_locality">ಪ್ರದೇಶ ಹುಡುಕಿ...</string>
+    <string name="btn_direct_email">ನೇರ ಇಮೇಲ್ ಕರಡು ✉️</string>
+
+    <!-- Department Routing -->
+    <string name="suggested_department">ಸೂಚಿಸಿದ ಇಲಾಖೆ</string>
+    <string name="routing_reason">ಬೆಂಗಳೂರು ನಾಗರಿಕ ಡೈರೆಕ್ಟರಿ ಆಧಾರಿತ</string>
+    <string name="to_recipients">ಸ್ವೀಕರಿಸುವವರು (To):</string>
+    <string name="cc_recipients">ಪ್ರತಿಗಳು (CC):</string>
+
+    <!-- Complaint Email -->
+    <string name="email_preview_title">ದೂರು ಇಮೇಲ್ ಪರಿಶೀಲನೆ</string>
+    <string name="email_subject_label">ವಿಷಯ:</string>
+    <string name="email_body_label">ವಿವರ:</string>
+    <string name="user_description_hint">ಹೆಚ್ಚಿನ ವಿವರಗಳನ್ನು ಸೇರಿಸಿ (ಐಚ್ಛಿಕ)...</string>
+    <string name="btn_open_email">ಇಮೇಲ್ ಆ್ಯಪ್ ತೆರೆಯಿರಿ</string>
+
+    <!-- Submission Dialog -->
+    <string name="dialog_submission_title">ನೀವು ಈ ದೂರನ್ನು ಕಳುಹಿಸಿದ್ದೀರಾ?</string>
+    <string name="dialog_submission_msg">ಇಮೇಲ್ ಆ್ಯಪ್ ತೆರೆಯುವುದರಿಂದ ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಸಬ್ಮಿಟ್ ಆಗುವುದಿಲ್ಲ. ಕಳುಹಿಸಲಾಗಿದೆಯೇ ಎಂದು ದೃಢೀಕರಿಸಿ.</string>
+    <string name="btn_mark_submitted">ಹೌದು, ಸಲ್ಲಿಸಲಾಗಿದೆ ಎಂದು ಗುರುತಿಸಿ</string>
+    <string name="btn_keep_draft">ಇಲ್ಲ, ಕರಡಾಗಿ ಇರಿಸಿ</string>
+    <string name="btn_reopen_email">ಮತ್ತೆ ಇಮೇಲ್ ತೆರೆಯಿರಿ</string>
+
+    <string name="search_reports">ವರದಿಗಳನ್ನು ಹುಡುಕಿ...</string>
+    <string name="filter_all">ಎಲ್ಲಾ</string>
+    <string name="report_detail">ವರದಿ ವಿವರಗಳು</string>
+    <string name="timeline_title">ವರದಿ ಸಮಯರೇಖೆ</string>
+    <string name="profile_title">ಬಳಕೆದಾರರ ಪ್ರೊಫೈಲ್</string>
+    <string name="about_title">ಸಿವಿಕ್ ಪಿನ್ ಬಗ್ಗೆ</string>
+    <string name="disclaimer">ಸಿವಿಕ್ ಪಿನ್ ಒಂದು ಸ್ವತಂತ್ರ ನಾಗರಿಕ ವರದಿ ಉಪಕರಣವಾಗಿದೆ ಮತ್ತು ಇದು ಅಧಿಕೃತ ಸರ್ಕಾರಿ ಆ್ಯಪ್ ಅಲ್ಲ.</string>
+</resources>
