@@ -34,7 +34,7 @@ public class HistoryFragment extends Fragment {
 
     private TextInputEditText etSearch;
     private ChipGroup cgHistoryFilters;
-    private TextView tvEmptyHistory;
+    private View tvEmptyHistory;
     private RecyclerView rvHistory;
 
     private String selectedStatus = "ALL";

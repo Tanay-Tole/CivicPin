@@ -13,7 +13,6 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        manifestPlaceholders["MAPS_API_KEY"] = "AIzaSyCE-mGodWAFqcl2BO_ItZ02nkKCwDkbeLQ"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -59,9 +58,9 @@ dependencies {
     implementation(libs.tensorflow.lite)
     implementation(libs.tensorflow.lite.support)
 
-    // Play Services Location and Maps
+    // Play Services Location + OpenStreetMap (osmdroid, no API key)
     implementation(libs.play.services.location)
-    implementation(libs.play.services.maps)
+    implementation(libs.osmdroid)
 
     // Room Database
     implementation(libs.room.runtime)

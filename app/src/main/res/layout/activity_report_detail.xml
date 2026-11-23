@@ -1,192 +1,295 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/detail_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/warm_cream"
-    android:clipToPadding="false"
-    android:fillViewport="true"
-    android:paddingTop="28dp">
+    android:background="@color/bg"
+    android:orientation="vertical">
 
+    <!-- Top bar -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_height="52dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingEnd="16dp">
 
-        <ImageView
-            android:id="@+id/detail_img_photo"
-            android:layout_width="match_parent"
-            android:layout_height="220dp"
-            android:background="#E0E0E0"
-            android:contentDescription="@string/app_name"
-            android:scaleType="centerCrop" />
+        <ImageButton
+            android:id="@+id/btn_detail_back"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/detail_back"
+            android:src="@drawable/ic_back"
+            app:tint="@color/text_primary" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingEnd="36dp"
+            android:text="@string/report_detail"
+            android:textAppearance="@style/TextAppearance.CivicPin.Headline"
+            tools:ignore="RtlSymmetry" />
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:paddingStart="20dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="32dp">
 
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/detail_photo_card"
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                app:cardBackgroundColor="@color/surface_2"
+                app:cardCornerRadius="24dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_gravity="center"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_gallery"
+                    app:tint="@color/text_tertiary" />
+
+                <ImageView
+                    android:id="@+id/detail_img_photo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/step_photo"
+                    android:scaleType="centerCrop" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Title + status -->
             <TextView
                 android:id="@+id/detail_tv_category"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@color/text_dark"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/detail_tv_status_badge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_status_badge"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="4dp"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/detail_tv_ai_info"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textColor="@color/bengaluru_purple"
-            android:textSize="13sp" />
-
-        <TextView
-            android:id="@+id/detail_tv_locality"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textColor="@color/text_dark"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/detail_tv_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:textColor="@color/text_muted"
-            android:textSize="13sp" />
-
-        <!-- Map Card -->
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:layout_marginTop="12dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="2dp">
-
-            <com.google.android.gms.maps.MapView
-                android:id="@+id/detail_map_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- Department & Recipients Card -->
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="2dp">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textAppearance="@style/TextAppearance.CivicPin.LargeTitle"
+                android:textSize="28sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="12dp">
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/detail_tv_dept_name"
-                    android:layout_width="match_parent"
+                    android:id="@+id/detail_tv_status_badge"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/text_dark"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/detail_tv_to_emails"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:textColor="@color/text_muted"
+                    android:background="@drawable/bg_status_badge"
+                    android:fontFamily="sans-serif-medium"
+                    android:paddingStart="12dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="5dp"
+                    android:textColor="@color/white"
                     android:textSize="13sp" />
 
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="12dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_sparkle"
+                    app:tint="@color/text_secondary" />
+
                 <TextView
-                    android:id="@+id/detail_tv_cc_emails"
-                    android:layout_width="match_parent"
+                    android:id="@+id/detail_tv_ai_info"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:textColor="@color/text_muted"
-                    android:textSize="13sp" />
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textAppearance="@style/TextAppearance.CivicPin.Footnote" />
             </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
 
-        <!-- Timeline Section -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/timeline_title"
-            android:textColor="@color/text_dark"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            <!-- Location -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="28dp"
+                android:text="@string/detail_section_location"
+                android:textAppearance="@style/TextAppearance.CivicPin.Section" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_detail_timeline"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:nestedScrollingEnabled="false" />
-
-        <!-- Actions -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:orientation="vertical">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_reopen_email"
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:text="@string/btn_reopen_email"
-                app:backgroundTint="@color/leaf_green"
-                app:cornerRadius="10dp" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <org.osmdroid.views.MapView
+                        android:id="@+id/detail_map_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="170dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:id="@+id/detail_tv_locality"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.CivicPin.Headline" />
+
+                        <TextView
+                            android:id="@+id/detail_tv_address"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:textAppearance="@style/TextAppearance.CivicPin.Subhead" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Routing -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="28dp"
+                android:text="@string/detail_section_routing"
+                android:textAppearance="@style/TextAppearance.CivicPin.Section" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/detail_tv_dept_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.CivicPin.Headline" />
+
+                    <View
+                        style="@style/CivicPin.Hairline"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="12dp" />
+
+                    <TextView
+                        android:id="@+id/detail_tv_to_emails"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.CivicPin.Subhead"
+                        android:textIsSelectable="true" />
+
+                    <TextView
+                        android:id="@+id/detail_tv_cc_emails"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:textAppearance="@style/TextAppearance.CivicPin.Subhead"
+                        android:textIsSelectable="true" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Timeline -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="28dp"
+                android:text="@string/timeline_title"
+                android:textAppearance="@style/TextAppearance.CivicPin.Section" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_detail_timeline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:paddingStart="16dp"
+                    android:paddingTop="10dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="10dp" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Actions -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_mark_submitted"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="8dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
                 android:text="@string/btn_mark_submitted"
-                app:backgroundTint="@color/bengaluru_purple"
-                app:cornerRadius="10dp" />
+                app:icon="@drawable/ic_check_circle" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_mark_resolved"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="8dp"
-                android:text="@string/btn_mark_resolved"
-                app:backgroundTint="@color/status_resolved"
-                app:cornerRadius="10dp" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_reopen_email"
+                    style="@style/Widget.CivicPin.Button.Secondary"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="@string/btn_reopen_email"
+                    android:textSize="15sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_mark_resolved"
+                    style="@style/Widget.CivicPin.Button.Secondary"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="@string/btn_mark_resolved"
+                    android:textSize="15sp" />
+            </LinearLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_delete_report"
+                style="@style/Widget.CivicPin.Button.Text"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/btn_delete"
-                app:backgroundTint="@color/soft_coral"
-                app:cornerRadius="10dp" />
+                android:textColor="@color/error" />
         </LinearLayout>
-
-    </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

@@ -3,131 +3,170 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/warm_cream"
+    android:background="@color/bg"
     android:clipToPadding="false"
-    android:fillViewport="true"
-    android:paddingTop="28dp">
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
-
-        <ImageView
-            android:id="@+id/img_profile_avatar"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_gravity="center"
-            android:contentDescription="@string/profile_title"
-            android:src="@drawable/ic_civic_pin_logo" />
+        android:paddingStart="20dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="32dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="8dp"
             android:text="@string/profile_title"
-            android:textColor="@color/text_dark"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textAppearance="@style/TextAppearance.CivicPin.LargeTitle" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="@string/display_name_hint">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_profile_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="@string/contact_email_hint">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_profile_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textEmailAddress" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Language Selector -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/language_setting"
-            android:textColor="@color/text_dark"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/profile_section_you"
+            android:textAppearance="@style/TextAppearance.CivicPin.Section" />
 
-        <RadioGroup
-            android:id="@+id/rg_language"
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="10dp">
 
-            <RadioButton
-                android:id="@+id/rb_lang_en"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="English" />
+                android:orientation="vertical"
+                android:padding="16dp">
 
-            <RadioButton
-                android:id="@+id/rb_lang_kn"
-                android:layout_width="wrap_content"
+                <FrameLayout
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/bg_icon_circle">
+
+                    <ImageView
+                        android:id="@+id/img_profile_avatar"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_profile"
+                        app:tint="@color/text_secondary" />
+                </FrameLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:hint="@string/display_name_hint">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_profile_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName|textCapWords" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:hint="@string/contact_email_hint">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_profile_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textEmailAddress" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="28dp"
+            android:text="@string/language_setting"
+            android:textAppearance="@style/TextAppearance.CivicPin.Section" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <RadioGroup
+                android:id="@+id/rg_language"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:text="ಕನ್ನಡ (Kannada)" />
-        </RadioGroup>
+                android:orientation="vertical"
+                android:paddingStart="8dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="4dp">
+
+                <RadioButton
+                    android:id="@+id/rb_lang_en"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:buttonTint="@color/accent"
+                    android:paddingStart="8dp"
+                    android:text="@string/lang_english"
+                    android:textColor="@color/text_primary"
+                    android:textSize="16sp" />
+
+                <View
+                    style="@style/CivicPin.Hairline"
+                    android:layout_marginStart="48dp" />
+
+                <RadioButton
+                    android:id="@+id/rb_lang_kn"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:buttonTint="@color/accent"
+                    android:paddingStart="8dp"
+                    android:text="@string/lang_kannada"
+                    android:textColor="@color/text_primary"
+                    android:textSize="16sp" />
+            </RadioGroup>
+        </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_save_profile"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="16dp"
-            android:text="Save Preferences"
-            app:backgroundTint="@color/bengaluru_purple"
-            app:cornerRadius="10dp" />
-
-        <!-- Disclaimer -->
-        <TextView
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:gravity="center"
-            android:text="@string/disclaimer"
-            android:textColor="@color/text_muted"
-            android:textSize="12sp" />
+            android:text="@string/btn_save_profile" />
 
-        <!-- App Logo Easter Egg for About Screen -->
         <ImageView
             android:id="@+id/img_app_logo_ee"
-            android:layout_width="54dp"
-            android:layout_height="54dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="16dp"
-            android:contentDescription="@string/about_title"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="36dp"
+            android:contentDescription="@string/app_name"
             android:src="@drawable/ic_civic_pin_logo" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="4dp"
-            android:text="Civic Pin v1.0 • Bengaluru Civic Alliance"
-            android:textColor="@color/text_muted"
-            android:textSize="11sp" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:text="@string/about_version"
+            android:textAppearance="@style/TextAppearance.CivicPin.Footnote"
+            android:textColor="@color/text_primary" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:text="@string/disclaimer"
+            android:textAppearance="@style/TextAppearance.CivicPin.Footnote"
+            android:textColor="@color/text_tertiary" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

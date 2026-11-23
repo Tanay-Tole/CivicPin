@@ -1,0 +1,2 @@
+{"date": "23 November 2026", "params": 894052, "tflite_mb": 3.57, "n_total": 5036, "counts": [708, 1328, 1000, 2000], "skipped": 5,
+ "epochs_run": 35, "epochs_max": 35, "train_minutes": 32.3, "tf": "2.21.0", "keras": "3.15.1"}

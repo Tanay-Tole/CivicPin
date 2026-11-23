@@ -13,7 +13,7 @@
 
     <!-- Dashboard -->
     <string name="btn_report_issue">+ ಸಮಸ್ಯೆ ವರದಿ ಮಾಡಿ</string>
-    <string name="btn_fast_manual_report">⚡ ನೇರ ವರದಿ (ಸ್ವಂತ ಪಿನ್)</string>
+    <string name="btn_fast_manual_report">ನೇರ ವರದಿ (ಸ್ವಂತ ಪಿನ್)</string>
     <string name="stat_total">ಒಟ್ಟು ವರದಿಗಳು</string>
     <string name="stat_drafts">ಕರಡುಗಳು</string>
     <string name="stat_composer">ಇಮೇಲ್ ತೆರೆದಿದೆ</string>
@@ -68,7 +68,7 @@
     <string name="locality_prompt">ಪ್ರದೇಶ / ಏರಿಯಾ:</string>
     <string name="select_locality">ಪ್ರದೇಶ ಆಯ್ಕೆಮಾಡಿ</string>
     <string name="search_locality">ಪ್ರದೇಶ ಹುಡುಕಿ...</string>
-    <string name="btn_direct_email">ನೇರ ಇಮೇಲ್ ಕರಡು ✉️</string>
+    <string name="btn_direct_email">ನೇರ ಇಮೇಲ್ ಕರಡು</string>
 
     <!-- Department Routing -->
     <string name="suggested_department">ಸೂಚಿಸಿದ ಇಲಾಖೆ</string>

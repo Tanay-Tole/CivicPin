@@ -31,7 +31,7 @@ public class HomeFragment extends Fragment {
     private TextView tvStatDrafts;
     private TextView tvStatComposer;
     private TextView tvStatSubmitted;
-    private TextView tvEmptyRecent;
+    private View tvEmptyRecent;
     private RecyclerView rvRecentReports;
 
     private int skylineTapCount = 0;
@@ -70,11 +70,15 @@ public class HomeFragment extends Fragment {
 
         btnFastManual.setOnClickListener(v -> {
             if (getActivity() instanceof MainActivity) {
-                ((MainActivity) getActivity()).navigateToReportTab();
+                ((MainActivity) getActivity()).navigateToReportTab(true);
             }
         });
 
-        // Easter Egg 1 — Namma Bengaluru (5 taps on skyline)
+        int hour = java.util.Calendar.getInstance().get(java.util.Calendar.HOUR_OF_DAY);
+        ((TextView) view.findViewById(R.id.tv_greeting)).setText(
+                hour < 12 ? R.string.greeting_morning : hour < 17 ? R.string.greeting_afternoon : R.string.greeting_evening);
+
+        // Easter egg: 5 taps on the logo
         imgSkyline.setOnClickListener(v -> {
             skylineTapCount++;
             if (skylineTapCount >= 5) {

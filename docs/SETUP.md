@@ -4,20 +4,15 @@
 - Android Studio Ladybug or newer.
 - Android SDK API 35 (Minimum SDK 26).
 - JDK 17.
-- Google Maps API Key for Android.
 
 ## Setup Steps
 
-### 1. Google Maps API Key Setup
-Place your Google Maps API Key in `app/build.gradle.kts`:
-```kotlin
-manifestPlaceholders["MAPS_API_KEY"] = "YOUR_GOOGLE_MAPS_API_KEY"
-```
-Ensure that the Google Maps SDK for Android is enabled in your Google Cloud Console project.
+### 1. Maps
+The app uses OpenStreetMap through the osmdroid library. No API key, Google Cloud project or billing account is needed. The map needs an internet connection to load tiles.
 
 ### 2. Assets Verification
 Verify the following assets exist in `app/src/main/assets/`:
-- `model_unquant.tflite`
+- `civicpin_model.tflite`
 - `labels.txt`
 - `email civic project.txt`
 
