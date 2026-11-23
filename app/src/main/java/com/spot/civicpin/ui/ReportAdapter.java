@@ -1,8 +1,9 @@
 package com.spot.civicpin.ui;
 
+import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.spot.civicpin.R;
@@ -41,6 +43,67 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportView
         notifyDataSetChanged();
     }
 
+    // Shared look-ups so every screen shows a category and a status the same way.
+
+    public static int iconFor(String category) {
+        if ("Garbage".equalsIgnoreCase(category)) return R.drawable.ic_garbage;
+        if ("Water_Leak_Sewer".equalsIgnoreCase(category)) return R.drawable.ic_water;
+        if ("Potholes".equalsIgnoreCase(category)) return R.drawable.ic_pothole;
+        return R.drawable.ic_others;
+    }
+
+    public static int colorFor(Context c, String category) {
+        int res = R.color.cat_others;
+        if ("Garbage".equalsIgnoreCase(category)) res = R.color.cat_garbage;
+        else if ("Water_Leak_Sewer".equalsIgnoreCase(category)) res = R.color.cat_water;
+        else if ("Potholes".equalsIgnoreCase(category)) res = R.color.cat_potholes;
+        return ContextCompat.getColor(c, res);
+    }
+
+    public static int softColorFor(Context c, String category) {
+        int res = R.color.cat_others_soft;
+        if ("Garbage".equalsIgnoreCase(category)) res = R.color.cat_garbage_soft;
+        else if ("Water_Leak_Sewer".equalsIgnoreCase(category)) res = R.color.cat_water_soft;
+        else if ("Potholes".equalsIgnoreCase(category)) res = R.color.cat_potholes_soft;
+        return ContextCompat.getColor(c, res);
+    }
+
+    public static int statusLabelRes(String status) {
+        if ("USER_MARKED_SUBMITTED".equals(status)) return R.string.status_submitted;
+        if ("USER_MARKED_RESOLVED".equals(status)) return R.string.status_resolved;
+        if ("EMAIL_COMPOSER_OPENED".equals(status)) return R.string.status_composer;
+        return R.string.status_draft;
+    }
+
+    /** English fallback for places without a Context (map preview line). */
+    public static String statusLabel(String status) {
+        if ("USER_MARKED_SUBMITTED".equals(status)) return "Submitted";
+        if ("USER_MARKED_RESOLVED".equals(status)) return "Resolved";
+        if ("EMAIL_COMPOSER_OPENED".equals(status)) return "Email opened";
+        return "Draft";
+    }
+
+    public static int statusColor(Context c, String status) {
+        int res = R.color.status_draft;
+        if ("USER_MARKED_SUBMITTED".equals(status)) res = R.color.status_submitted;
+        else if ("USER_MARKED_RESOLVED".equals(status)) res = R.color.status_resolved;
+        else if ("EMAIL_COMPOSER_OPENED".equals(status)) res = R.color.status_composer;
+        return ContextCompat.getColor(c, res);
+    }
+
+    /** Decode a small version of the photo so list scrolling stays smooth. */
+    public static Bitmap loadThumb(String path, int targetPx) {
+        if (path == null || path.isEmpty() || !new File(path).exists()) return null;
+        BitmapFactory.Options o = new BitmapFactory.Options();
+        o.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(path, o);
+        int sample = 1;
+        while (Math.min(o.outWidth, o.outHeight) / (sample * 2) >= targetPx) sample *= 2;
+        o.inJustDecodeBounds = false;
+        o.inSampleSize = sample;
+        return BitmapFactory.decodeFile(path, o);
+    }
+
     @NonNull
     @Override
     public ReportViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -50,8 +113,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportView
 
     @Override
     public void onBindViewHolder(@NonNull ReportViewHolder holder, int position) {
-        CivicReportEntity report = reports.get(position);
-        holder.bind(report, listener);
+        holder.bind(reports.get(position), listener);
     }
 
     @Override
@@ -60,69 +122,45 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportView
     }
 
     static class ReportViewHolder extends RecyclerView.ViewHolder {
-        ImageView imgThumbnail;
-        TextView tvCategory;
-        TextView tvLocality;
-        TextView tvRefAndDate;
-        TextView tvStatusBadge;
+        final ImageView imgThumbnail, imgCategoryIcon;
+        final View thumbIconBg, statusDot;
+        final TextView tvCategory, tvLocality, tvRefAndDate, tvStatusBadge;
 
-        public ReportViewHolder(@NonNull View itemView) {
+        ReportViewHolder(@NonNull View itemView) {
             super(itemView);
             imgThumbnail = itemView.findViewById(R.id.img_thumbnail);
+            imgCategoryIcon = itemView.findViewById(R.id.img_category_icon);
+            thumbIconBg = itemView.findViewById(R.id.thumb_icon_bg);
+            statusDot = itemView.findViewById(R.id.status_dot);
             tvCategory = itemView.findViewById(R.id.tv_category);
             tvLocality = itemView.findViewById(R.id.tv_locality);
             tvRefAndDate = itemView.findViewById(R.id.tv_ref_and_date);
             tvStatusBadge = itemView.findViewById(R.id.tv_status_badge);
         }
 
-        public void bind(CivicReportEntity report, OnReportClickListener listener) {
-            String categoryDisplay = CivicIssueClassifier.getDisplayNameForLabel(
-                    report.confirmedCategory != null ? report.confirmedCategory : report.aiPredictedCategory
-            );
-            tvCategory.setText(categoryDisplay);
+        void bind(CivicReportEntity report, OnReportClickListener listener) {
+            Context c = itemView.getContext();
+            String category = report.confirmedCategory != null ? report.confirmedCategory : report.aiPredictedCategory;
+            tvCategory.setText(CivicIssueClassifier.getDisplayNameForLabel(category));
+            tvLocality.setText(report.locality != null && !report.locality.isEmpty() ? report.locality : "Bengaluru");
 
-            String localityStr = report.locality != null && !report.locality.isEmpty() ? report.locality : "Bengaluru";
-            tvLocality.setText(localityStr);
-
-            SimpleDateFormat sdf = new SimpleDateFormat("dd MMM, yyyy", Locale.getDefault());
-            String dateStr = sdf.format(new Date(report.createdAt));
+            String dateStr = new SimpleDateFormat("d MMM", Locale.getDefault()).format(new Date(report.createdAt));
             String refShort = report.reportId.length() >= 8 ? report.reportId.substring(0, 8).toUpperCase() : report.reportId.toUpperCase();
-            tvRefAndDate.setText(String.format("Ref: CP-%s • %s", refShort, dateStr));
+            tvRefAndDate.setText(String.format("%s  ·  CP-%s", dateStr, refShort));
 
-            // Status Badge Formatting
-            String status = report.status != null ? report.status : "DRAFT";
-            tvStatusBadge.setText(status.replace("_", " "));
-            switch (status) {
-                case "USER_MARKED_SUBMITTED":
-                    tvStatusBadge.getBackground().setTint(Color.parseColor("#27AE60"));
-                    break;
-                case "USER_MARKED_RESOLVED":
-                    tvStatusBadge.getBackground().setTint(Color.parseColor("#8E44AD"));
-                    break;
-                case "EMAIL_COMPOSER_OPENED":
-                    tvStatusBadge.getBackground().setTint(Color.parseColor("#2980B9"));
-                    break;
-                case "DRAFT":
-                default:
-                    tvStatusBadge.getBackground().setTint(Color.parseColor("#7F8C8D"));
-                    break;
-            }
+            tvStatusBadge.setText(statusLabelRes(report.status));
+            statusDot.setBackgroundTintList(ColorStateList.valueOf(statusColor(c, report.status)));
 
-            // Thumbnail Image Loading
-            if (report.imagePath != null && !report.imagePath.isEmpty()) {
-                File file = new File(report.imagePath);
-                if (file.exists()) {
-                    Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-                    if (bitmap != null) {
-                        imgThumbnail.setImageBitmap(bitmap);
-                    } else {
-                        imgThumbnail.setImageResource(R.drawable.ic_report);
-                    }
-                } else {
-                    imgThumbnail.setImageResource(R.drawable.ic_report);
-                }
+            imgCategoryIcon.setImageResource(iconFor(category));
+            imgCategoryIcon.setImageTintList(ColorStateList.valueOf(colorFor(c, category)));
+            thumbIconBg.setBackgroundTintList(ColorStateList.valueOf(softColorFor(c, category)));
+
+            Bitmap thumb = loadThumb(report.imagePath, 160);
+            if (thumb != null) {
+                imgThumbnail.setImageBitmap(thumb);
+                imgThumbnail.setVisibility(View.VISIBLE);
             } else {
-                imgThumbnail.setImageResource(R.drawable.ic_report);
+                imgThumbnail.setVisibility(View.GONE);
             }
 
             itemView.setOnClickListener(v -> {

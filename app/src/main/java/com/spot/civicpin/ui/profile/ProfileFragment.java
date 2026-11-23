@@ -79,14 +79,14 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        // Easter Egg 7 — Hidden About Screen (7 taps)
+        // Hidden about screen (7 taps on the logo)
         imgLogoEe.setOnClickListener(v -> {
             logoTapCount++;
             if (logoTapCount >= 7) {
                 logoTapCount = 0;
                 new AlertDialog.Builder(requireContext())
-                        .setTitle("Civic Pin Developer Credits")
-                        .setMessage("Civic Pin v1.0 — Bengaluru's AI Civic Reporting Application\n\nDeveloped with Java, TensorFlow Lite, Google Maps SDK & Room Database.\nNamma Bengaluru! ☕ 🚦")
+                        .setTitle("About Civic Pin")
+                        .setMessage("Civic Pin 1.0\n\nBuilt with Java, TensorFlow Lite, OpenStreetMap and Room. The issue classifier is our own model, trained from scratch.\n\nNamma Bengaluru!")
                         .setPositiveButton("OK", null)
                         .show();
             }

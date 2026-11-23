@@ -12,38 +12,38 @@
     <string name="nav_profile">Profile</string>
 
     <!-- Dashboard -->
-    <string name="btn_report_issue">+ Report an Issue</string>
-    <string name="btn_fast_manual_report">⚡ Fast Manual Report (Self Pin)</string>
-    <string name="stat_total">Total Reports</string>
+    <string name="btn_report_issue">Report an issue</string>
+    <string name="btn_fast_manual_report">Quick report without AI</string>
+    <string name="stat_total">Total</string>
     <string name="stat_drafts">Drafts</string>
-    <string name="stat_composer">Composer Opened</string>
+    <string name="stat_composer">Email opened</string>
     <string name="stat_submitted">Submitted</string>
     <string name="stat_resolved">Resolved</string>
-    <string name="recent_activity">Recent Reports</string>
-    <string name="no_recent_reports">No civic reports yet. Tap \'+ Report an Issue\' to start!</string>
+    <string name="recent_activity">Recent reports</string>
+    <string name="no_recent_reports">No reports yet. Your first one takes under a minute.</string>
 
     <!-- Reporting Steps -->
-    <string name="step_photo">1. Photograph</string>
-    <string name="step_ai">2. AI Check</string>
-    <string name="step_location">3. Location Pinning</string>
-    <string name="step_route">4. Department</string>
-    <string name="step_email">5. Complaint Email</string>
+    <string name="step_photo">Add a photo</string>
+    <string name="step_ai">Check the category</string>
+    <string name="step_location">Pin the location</string>
+    <string name="step_route">Who gets the complaint</string>
+    <string name="step_email">Review the email</string>
 
     <!-- Camera / Image -->
-    <string name="take_photo">Take Photo</string>
-    <string name="select_gallery">Select from Gallery</string>
+    <string name="take_photo">Camera</string>
+    <string name="select_gallery">Gallery</string>
     <string name="retake_photo">Retake Photo</string>
-    <string name="continue_btn">Continue with AI Check</string>
-    <string name="btn_skip_to_manual">Manual Pin &amp; Skip AI</string>
+    <string name="continue_btn">Continue</string>
+    <string name="btn_skip_to_manual">Skip photo and pick a category</string>
 
     <!-- AI Classification -->
-    <string name="ai_detecting">Analyzing issue with TensorFlow Lite...</string>
-    <string name="ai_detected">AI detected: %1$s</string>
-    <string name="ai_confidence">Confidence: %1$d%%</string>
-    <string name="ai_is_correct">Is this classification correct?</string>
-    <string name="btn_yes_continue">Yes, Continue</string>
-    <string name="btn_change_category">Change Category</string>
-    <string name="ai_low_confidence">We\'re not completely sure about this issue. Please select the correct category.</string>
+    <string name="ai_detecting">Looking at your photo</string>
+    <string name="ai_detected">%1$s</string>
+    <string name="ai_confidence">%1$d%% sure</string>
+    <string name="ai_is_correct">Does this look right?</string>
+    <string name="btn_yes_continue">Yes, continue</string>
+    <string name="btn_change_category">Change</string>
+    <string name="ai_low_confidence">Not sure about this one. Pick the category that fits best.</string>
     <string name="ai_others_msg">No supported civic issue was confidently identified. You can manually pick a category below or retake the photo.</string>
 
     <!-- Categories -->
@@ -53,61 +53,61 @@
     <string name="cat_others_name">Other / No Supported Issue</string>
 
     <!-- Issue Subtypes -->
-    <string name="subtype_prompt">Select Issue Subtype:</string>
+    <string name="subtype_prompt">Issue type</string>
     <string name="subtype_water_leak">Water pipe leakage</string>
     <string name="subtype_sewage">Sewage overflow</string>
     <string name="subtype_drain">Blocked or overflowing drain</string>
     <string name="subtype_unsure">Unsure / General water problem</string>
 
     <!-- Location -->
-    <string name="location_title">Pin Location on Map (Tap map to move pin)</string>
+    <string name="location_title">Tap the map to move the pin</string>
     <string name="location_detecting">Fetching location...</string>
-    <string name="btn_confirm_location">Confirm Location</string>
+    <string name="btn_confirm_location">Confirm location</string>
     <string name="btn_adjust_pin">Tap Map to Place Pin</string>
     <string name="btn_use_current_location">Use Current Location</string>
-    <string name="locality_prompt">Locality / Area:</string>
+    <string name="locality_prompt">Locality</string>
     <string name="select_locality">Select Locality</string>
     <string name="search_locality">Search Locality...</string>
-    <string name="btn_direct_email">Direct Email Draft ✉️</string>
+    <string name="btn_direct_email">Skip to email</string>
 
     <!-- Department Routing -->
-    <string name="suggested_department">Suggested Department</string>
+    <string name="suggested_department">Suggested department</string>
     <string name="routing_reason">Routing based on Bengaluru escalation directory</string>
-    <string name="to_recipients">To Recipients:</string>
-    <string name="cc_recipients">CC Recipients:</string>
+    <string name="to_recipients">To</string>
+    <string name="cc_recipients">CC</string>
     <string name="btn_edit_recipients">Edit Recipients</string>
 
     <!-- Complaint Email -->
-    <string name="email_preview_title">Review Complaint Email</string>
-    <string name="email_subject_label">Subject:</string>
-    <string name="email_body_label">Body:</string>
+    <string name="email_preview_title">Review the email</string>
+    <string name="email_subject_label">Subject</string>
+    <string name="email_body_label">Message</string>
     <string name="user_description_hint">Add additional details about the issue (optional)...</string>
-    <string name="btn_open_email">Open Email App</string>
+    <string name="btn_open_email">Open in email app</string>
 
     <!-- Submission Dialog -->
     <string name="dialog_submission_title">Did you send this complaint?</string>
     <string name="dialog_submission_msg">Opening your email app does not automatically deliver the complaint. Please confirm if you sent it.</string>
-    <string name="btn_mark_submitted">Yes, Mark as Submitted</string>
-    <string name="btn_keep_draft">No, Keep as Draft</string>
-    <string name="btn_reopen_email">Open Email Again</string>
+    <string name="btn_mark_submitted">Mark as submitted</string>
+    <string name="btn_keep_draft">No, keep as draft</string>
+    <string name="btn_reopen_email">Open email again</string>
 
     <!-- History & Map -->
-    <string name="search_reports">Search reports...</string>
+    <string name="search_reports">Search reports</string>
     <string name="filter_all">All</string>
-    <string name="report_detail">Report Details</string>
-    <string name="timeline_title">Report Timeline</string>
+    <string name="report_detail">Report</string>
+    <string name="timeline_title">Timeline</string>
     <string name="user_notes_label">User Notes:</string>
     <string name="add_note">Add Follow-up Note</string>
-    <string name="btn_mark_resolved">Mark as Resolved</string>
-    <string name="btn_delete">Delete Report</string>
+    <string name="btn_mark_resolved">Mark as resolved</string>
+    <string name="btn_delete">Delete report</string>
     <string name="confirm_delete_msg">Are you sure you want to delete this report permanently?</string>
 
     <!-- Profile & Settings -->
-    <string name="profile_title">User Profile</string>
-    <string name="display_name_hint">Your Display Name</string>
-    <string name="contact_email_hint">Your Email Address</string>
+    <string name="profile_title">Profile</string>
+    <string name="display_name_hint">Name</string>
+    <string name="contact_email_hint">Email</string>
     <string name="contact_phone_hint">Your Phone Number</string>
-    <string name="language_setting">Language / ಭಾಷೆ</string>
+    <string name="language_setting">Language</string>
     <string name="confidence_threshold">AI Confidence Threshold (%1$d%%)</string>
     <string name="signature_setting">Default Email Signature</string>
     <string name="btn_clear_data">Clear Local Data</string>
@@ -117,11 +117,50 @@
 
     <!-- Easter Eggs & Memes -->
     <string name="ee_namma_ooru">Namma Ooru. Namma Responsibility.</string>
-    <string name="ee_coffee_toast">One small step for a better Bengaluru. ☕</string>
+    <string name="ee_coffee_toast">One small step for a better Bengaluru.</string>
     <string name="kannada_greeting">ನಮ್ಮ ಬೆಂಗಳೂರು</string>
 
     <!-- Errors -->
     <string name="error_no_email_app">No compatible email application found on device.</string>
     <string name="error_location_disabled">Location services are disabled. Please enable GPS.</string>
     <string name="error_camera_failed">Failed to open camera preview.</string>
+    <!-- Redesign additions -->
+    <string name="home_hero_title">Spot it. Pin it.\nReport it.</string>
+    <string name="home_hero_body">Take a photo and Civic Pin drafts the complaint to the right Bengaluru office.</string>
+    <string name="home_overview">Overview</string>
+    <string name="greeting_morning">Good morning</string>
+    <string name="greeting_afternoon">Good afternoon</string>
+    <string name="greeting_evening">Good evening</string>
+    <string name="wizard_title">New report</string>
+    <string name="wizard_step">Step %1$d of 5</string>
+    <string name="photo_placeholder">A clear photo helps the AI and the officer</string>
+    <string name="btn_capture">Capture photo</string>
+    <string name="ai_manual_title">Pick a category</string>
+    <string name="ai_manual_body">No photo to check, so choose what fits best.</string>
+    <string name="category_picker_title">Categories</string>
+    <string name="notes_hint">Notes for the officer (optional)</string>
+    <string name="btn_generate_email">Draft the email</string>
+    <string name="map_count_empty">No pinned reports yet</string>
+    <plurals name="map_count">
+        <item quantity="one">%d report on the map</item>
+        <item quantity="other">%d reports on the map</item>
+    </plurals>
+    <string name="map_fit_all">Show all reports</string>
+    <string name="cat_short_garbage">Garbage</string>
+    <string name="cat_short_water">Water</string>
+    <string name="cat_short_potholes">Potholes</string>
+    <string name="cat_short_others">Others</string>
+    <string name="status_draft">Draft</string>
+    <string name="status_composer">Email opened</string>
+    <string name="status_submitted">Submitted</string>
+    <string name="status_resolved">Resolved</string>
+    <string name="history_empty">No reports match that search.</string>
+    <string name="detail_section_location">Location</string>
+    <string name="detail_section_routing">Sent to</string>
+    <string name="detail_back">Back</string>
+    <string name="profile_section_you">You</string>
+    <string name="btn_save_profile">Save</string>
+    <string name="about_version">Civic Pin 1.0</string>
+    <string name="lang_english">English</string>
+    <string name="lang_kannada">ಕನ್ನಡ (Kannada)</string>
 </resources>

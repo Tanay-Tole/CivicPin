@@ -2,9 +2,7 @@ package com.spot.civicpin.ui.details;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,13 +14,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.button.MaterialButton;
 import com.spot.civicpin.R;
+import com.spot.civicpin.ui.ReportAdapter;
+import com.spot.civicpin.ui.map.OsmMap;
+
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.Marker;
 import com.spot.civicpin.ai.CivicIssueClassifier;
 import com.spot.civicpin.data.CivicReportEntity;
 import com.spot.civicpin.data.CivicReportRepository;
@@ -30,7 +29,6 @@ import com.spot.civicpin.email.EmailIntentHelper;
 import com.spot.civicpin.ui.EventTimelineAdapter;
 import com.spot.civicpin.utils.LocaleHelper;
 
-import java.io.File;
 import java.util.Locale;
 
 public class ReportDetailActivity extends AppCompatActivity {
@@ -44,6 +42,7 @@ public class ReportDetailActivity extends AppCompatActivity {
     private TextView tvCategory, tvStatusBadge, tvAiInfo, tvLocality, tvAddress;
     private TextView tvDeptName, tvToEmails, tvCcEmails;
     private MapView mapView;
+    private Marker pin;
     private EventTimelineAdapter timelineAdapter;
 
     @Override
@@ -54,7 +53,16 @@ public class ReportDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        OsmMap.init(this);
         setContentView(R.layout.activity_report_detail);
+
+        // Android 15 draws edge to edge: keep content clear of the system bars.
+        androidx.core.view.ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.detail_root), (v, insets) -> {
+            androidx.core.graphics.Insets bars = insets.getInsets(androidx.core.view.WindowInsetsCompat.Type.systemBars());
+            v.setPadding(0, bars.top, 0, bars.bottom);
+            return insets;
+        });
+        findViewById(R.id.btn_detail_back).setOnClickListener(v -> finish());
 
         repository = new CivicReportRepository(this);
 
@@ -75,11 +83,10 @@ public class ReportDetailActivity extends AppCompatActivity {
         tvCcEmails = findViewById(R.id.detail_tv_cc_emails);
 
         mapView = findViewById(R.id.detail_map_view);
-        try {
-            mapView.onCreate(savedInstanceState);
-        } catch (Exception e) {
-            Log.e(TAG, "Error in MapView onCreate", e);
-        }
+        OsmMap.setup(mapView);
+        mapView.getController().setZoom(11.5);
+        mapView.getController().setCenter(new GeoPoint(12.9716, 77.5946));
+        mapView.setOnTouchListener((v, e) -> true); // static preview: scrolling the page must not drag the map
 
         RecyclerView rvTimeline = findViewById(R.id.rv_detail_timeline);
         rvTimeline.setLayoutManager(new LinearLayoutManager(this));
@@ -146,43 +153,46 @@ public class ReportDetailActivity extends AppCompatActivity {
                 report.confirmedCategory != null ? report.confirmedCategory : report.aiPredictedCategory
         );
         tvCategory.setText(categoryDisplay);
-        tvStatusBadge.setText(report.status != null ? report.status.replace("_", " ") : "DRAFT");
+        tvStatusBadge.setText(ReportAdapter.statusLabelRes(report.status));
+        tvStatusBadge.getBackground().mutate().setTint(ReportAdapter.statusColor(this, report.status));
 
-        tvAiInfo.setText(String.format(Locale.getDefault(), "AI Predicted: %s (%.0f%% confidence)",
-                CivicIssueClassifier.getDisplayNameForLabel(report.aiPredictedCategory),
-                report.aiConfidence * 100));
+        if (report.aiPredictedCategory != null) {
+            tvAiInfo.setText(String.format(Locale.getDefault(), "AI said %s, %.0f%% sure",
+                    CivicIssueClassifier.getDisplayNameForLabel(report.aiPredictedCategory),
+                    report.aiConfidence * 100));
+        } else {
+            tvAiInfo.setText("Category picked by you");
+        }
 
-        tvLocality.setText(String.format("Locality: %s", report.locality != null ? report.locality : "Bengaluru"));
-        tvAddress.setText(String.format("Address: %s", report.address != null ? report.address : "N/A"));
+        tvLocality.setText(report.locality != null && !report.locality.isEmpty() ? report.locality : "Bengaluru");
+        tvAddress.setText(report.address != null ? report.address : "No address saved");
 
-        tvDeptName.setText(String.format("Department: %s", report.departmentName != null ? report.departmentName : "N/A"));
-        tvToEmails.setText(String.format("To: %s", report.toEmails != null ? report.toEmails : "N/A"));
-        tvCcEmails.setText(String.format("CC: %s", report.ccEmails != null ? report.ccEmails : "N/A"));
+        tvDeptName.setText(report.departmentName != null ? report.departmentName : "No department yet");
+        tvToEmails.setText(String.format("To: %s", report.toEmails != null && !report.toEmails.isEmpty() ? report.toEmails : "not set"));
+        tvCcEmails.setText(String.format("CC: %s", report.ccEmails != null && !report.ccEmails.isEmpty() ? report.ccEmails : "not set"));
 
-        if (report.imagePath != null && !report.imagePath.isEmpty()) {
-            File file = new File(report.imagePath);
-            if (file.exists()) {
-                Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-                if (bitmap != null) {
-                    imgPhoto.setImageBitmap(bitmap);
-                }
+        // Show the photo block only when there is a photo to show.
+        Bitmap photo = ReportAdapter.loadThumb(report.imagePath, 1080);
+        findViewById(R.id.detail_photo_card).setVisibility(photo != null ? android.view.View.VISIBLE : android.view.View.GONE);
+        if (photo != null) imgPhoto.setImageBitmap(photo);
+
+        if (mapView != null && (report.latitude != 0.0 || report.longitude != 0.0)) {
+            GeoPoint pos = new GeoPoint(report.latitude, report.longitude);
+            if (pin == null) {
+                pin = new Marker(mapView);
+                pin.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+                pin.setInfoWindow(null);
+                mapView.getOverlays().add(pin);
             }
-        }
-
-        if (mapView != null && report.latitude != 0.0 && report.longitude != 0.0) {
-            mapView.getMapAsync(map -> {
-                LatLng pos = new LatLng(report.latitude, report.longitude);
-                map.addMarker(new MarkerOptions().position(pos).title(categoryDisplay));
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 15f));
-            });
+            String category = report.confirmedCategory != null ? report.confirmedCategory : report.aiPredictedCategory;
+            pin.setIcon(OsmMap.pin(this, OsmMap.colorFor(this, category)));
+            pin.setPosition(pos);
+            mapView.getController().setZoom(16.0);
+            mapView.getController().setCenter(pos);
+            mapView.invalidate();
         }
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (mapView != null) mapView.onStart();
-    }
 
     @Override
     protected void onResume() {
@@ -196,27 +206,12 @@ public class ReportDetailActivity extends AppCompatActivity {
         super.onPause();
     }
 
-    @Override
-    protected void onStop() {
-        if (mapView != null) mapView.onStop();
-        super.onStop();
-    }
 
     @Override
     protected void onDestroy() {
-        if (mapView != null) mapView.onDestroy();
+        if (mapView != null) mapView.onDetach();
         super.onDestroy();
     }
 
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if (mapView != null) mapView.onSaveInstanceState(outState);
-    }
 
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        if (mapView != null) mapView.onLowMemory();
-    }
 }

@@ -33,11 +33,6 @@
         android:theme="@style/Theme.CivicPin"
         tools:replace="android:allowBackup">
 
-        <!-- Google Maps API Key -->
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCE-mGodWAFqcl2BO_ItZ02nkKCwDkbeLQ" />
-
         <activity
             android:name="com.spot.civicpin.MainActivity"
             android:exported="true"

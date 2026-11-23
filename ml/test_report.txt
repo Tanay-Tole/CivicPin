@@ -1,0 +1,15 @@
+test photos: 755  overall accuracy: 94.8%
+
+per category (right / total):
+  Garbage             99 / 106  = 93.4%
+  Water_Leak_Sewer   186 / 199  = 93.5%
+  Potholes           145 / 150  = 96.7%
+  Others             286 / 300  = 95.3%
+
+confusion (rows = true, cols = predicted): Garbage, Water_Leak_Sewer, Potholes, Others
+     99     0     5     2
+      1   186     4     8
+      2     2   145     1
+      0     9     5   286
+
+app auto-accepts (>=75% sure): 82.9% of photos, and those are right 98.4% of the time

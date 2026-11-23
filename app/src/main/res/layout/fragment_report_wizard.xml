@@ -1,60 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/wizard_scroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/warm_cream"
+    android:background="@color/bg"
     android:clipToPadding="false"
-    android:fillViewport="true"
-    android:paddingTop="28dp">
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:paddingStart="20dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="28dp">
+
+        <!-- Header: step count, step title, progress -->
+        <TextView
+            android:id="@+id/tv_wizard_step"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.CivicPin.Subhead" />
 
         <TextView
             android:id="@+id/tv_wizard_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Report a Civic Issue"
-            android:textColor="@color/text_dark"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:text="@string/step_photo"
+            android:textAppearance="@style/TextAppearance.CivicPin.LargeTitle"
+            android:textSize="30sp" />
 
-        <!-- Progress Indicator for Wizard Steps -->
         <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/wizard_progress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="14dp"
             android:max="100"
-            android:progress="20"
-            app:indicatorColor="@color/bengaluru_purple"
-            app:trackColor="#E0E0E0" />
+            android:progress="20" />
 
-        <!-- Step 1 Container: CameraX & Gallery Options -->
+        <!-- Step 1: photo -->
         <LinearLayout
             android:id="@+id/step1_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="22dp"
             android:orientation="vertical"
             android:visibility="visible">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/step_photo"
-                android:textColor="@color/text_dark"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <FrameLayout
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="220dp"
-                android:layout_marginTop="12dp">
+                android:layout_height="300dp"
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardCornerRadius="24dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_photo_well"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="24dp">
+
+                    <FrameLayout
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:background="@drawable/bg_icon_circle">
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_gravity="center"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_camera"
+                            app:tint="@color/text_secondary" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:gravity="center"
+                        android:text="@string/photo_placeholder"
+                        android:textAppearance="@style/TextAppearance.CivicPin.Subhead" />
+                </LinearLayout>
 
                 <androidx.camera.view.PreviewView
                     android:id="@+id/camera_preview"
@@ -66,255 +96,311 @@
                     android:id="@+id/img_preview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#E0E0E0"
-                    android:contentDescription="@string/app_name"
+                    android:contentDescription="@string/step_photo"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_camera"
                     android:visibility="visible" />
-            </FrameLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_snap_photo"
+                style="@style/Widget.CivicPin.Button.Accent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="@string/btn_capture"
+                android:visibility="gone"
+                app:icon="@drawable/ic_camera" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="14dp"
                 android:orientation="horizontal">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_take_photo"
+                    style="@style/Widget.CivicPin.Button.Secondary"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="4dp"
+                    android:layout_marginEnd="5dp"
                     android:layout_weight="1"
                     android:text="@string/take_photo"
-                    app:backgroundTint="@color/bengaluru_purple"
                     app:icon="@drawable/ic_camera" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_select_gallery"
+                    style="@style/Widget.CivicPin.Button.Secondary"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
+                    android:layout_marginStart="5dp"
                     android:layout_weight="1"
                     android:text="@string/select_gallery"
-                    app:backgroundTint="@color/leaf_green"
                     app:icon="@drawable/ic_gallery" />
             </LinearLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_snap_photo"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:layout_marginTop="8dp"
-                android:text="📸 Snap Photograph"
-                android:visibility="gone"
-                app:backgroundTint="@color/bengaluru_purple"
-                app:cornerRadius="12dp" />
-
-            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_step1_next"
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:enabled="false"
-                android:text="@string/continue_btn"
-                app:backgroundTint="@color/bengaluru_purple"
-                app:cornerRadius="12dp" />
+                android:text="@string/continue_btn" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_skip_to_manual"
+                style="@style/Widget.CivicPin.Button.Text"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="8dp"
-                android:text="@string/btn_skip_to_manual"
-                app:backgroundTint="@color/rain_blue"
-                app:cornerRadius="12dp" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/btn_skip_to_manual" />
         </LinearLayout>
 
-        <!-- Step 2 Container: AI Classification -->
+        <!-- Step 2: AI result -->
         <LinearLayout
             android:id="@+id/step2_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="22dp"
             android:orientation="vertical"
             android:visibility="gone">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/step_ai"
-                android:textColor="@color/text_dark"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <ProgressBar
-                android:id="@+id/pb_ai_loading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="16dp" />
-
-            <TextView
-                android:id="@+id/tv_ai_result"
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:gravity="center"
-                android:textColor="@color/text_dark"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tv_ai_confidence"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:gravity="center"
-                android:textColor="@color/bengaluru_purple"
-                android:textSize="16sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:padding="24dp">
 
-            <TextView
-                android:id="@+id/tv_ai_question"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:gravity="center"
-                android:text="@string/ai_is_correct"
-                android:textColor="@color/text_dark"
-                android:textSize="14sp" />
+                    <FrameLayout
+                        android:id="@+id/ai_icon_bg"
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        android:background="@drawable/bg_icon_circle">
+
+                        <ImageView
+                            android:id="@+id/img_ai_icon"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_gravity="center"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_sparkle"
+                            app:tint="@color/text_secondary" />
+
+                        <ProgressBar
+                            android:id="@+id/pb_ai_loading"
+                            android:layout_width="72dp"
+                            android:layout_height="72dp"
+                            android:indeterminateTint="@color/accent"
+                            android:visibility="gone" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/tv_ai_result"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:gravity="center"
+                        android:textAppearance="@style/TextAppearance.CivicPin.Title" />
+
+                    <TextView
+                        android:id="@+id/tv_ai_confidence"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:gravity="center"
+                        android:textColor="@color/accent"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tv_ai_question"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:text="@string/ai_is_correct"
+                        android:textAppearance="@style/TextAppearance.CivicPin.Subhead" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
             <LinearLayout
+                android:id="@+id/ll_ai_actions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="14dp"
                 android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_ai_change"
+                    style="@style/Widget.CivicPin.Button.Secondary"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
+                    android:text="@string/btn_change_category" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_ai_confirm"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="4dp"
-                    android:layout_weight="1"
-                    android:text="@string/btn_yes_continue"
-                    app:backgroundTint="@color/bengaluru_purple" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_ai_change"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_weight="1"
-                    android:text="@string/btn_change_category"
-                    app:backgroundTint="@color/soft_coral" />
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1.4"
+                    android:text="@string/btn_yes_continue" />
             </LinearLayout>
 
-            <!-- Manual Category Selector Grid -->
             <LinearLayout
                 android:id="@+id/ll_category_selector"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:orientation="vertical"
                 android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Select Correct Category:"
-                    android:textColor="@color/text_dark"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:layout_marginStart="4dp"
+                    android:layout_marginBottom="6dp"
+                    android:text="@string/category_picker_title"
+                    android:textAppearance="@style/TextAppearance.CivicPin.Section" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_cat_garbage"
+                    style="@style/Widget.CivicPin.Button.Tile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="6dp"
                     android:text="@string/cat_garbage_name"
-                    app:backgroundTint="@color/cat_garbage"
-                    app:icon="@drawable/ic_garbage" />
+                    app:icon="@drawable/ic_garbage"
+                    app:iconTint="@color/cat_garbage" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_cat_water"
+                    style="@style/Widget.CivicPin.Button.Tile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="8dp"
                     android:text="@string/cat_water_name"
-                    app:backgroundTint="@color/cat_water"
-                    app:icon="@drawable/ic_water" />
+                    app:icon="@drawable/ic_water"
+                    app:iconTint="@color/cat_water" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_cat_potholes"
+                    style="@style/Widget.CivicPin.Button.Tile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="8dp"
                     android:text="@string/cat_potholes_name"
-                    app:backgroundTint="@color/cat_potholes"
-                    app:icon="@drawable/ic_pothole" />
+                    app:icon="@drawable/ic_pothole"
+                    app:iconTint="@color/cat_potholes" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_cat_others"
+                    style="@style/Widget.CivicPin.Button.Tile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="8dp"
                     android:text="@string/cat_others_name"
-                    app:backgroundTint="@color/cat_others"
-                    app:icon="@drawable/ic_others" />
+                    app:icon="@drawable/ic_others"
+                    app:iconTint="@color/cat_others" />
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Step 3 Container: Location Pinning & Interactive Map -->
+        <!-- Step 3: location -->
         <LinearLayout
             android:id="@+id/step3_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="22dp"
             android:orientation="vertical"
             android:visibility="gone">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/location_title"
-                android:textColor="@color/text_dark"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-
-            <!-- Google Map View Frame -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="220dp"
-                android:layout_marginTop="8dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp">
+                android:layout_height="280dp"
+                app:cardCornerRadius="24dp">
 
-                <com.google.android.gms.maps.MapView
+                <org.osmdroid.views.MapView
                     android:id="@+id/map_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|center_horizontal"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_map_overlay"
+                    android:elevation="3dp"
+                    android:paddingStart="14dp"
+                    android:paddingTop="7dp"
+                    android:paddingEnd="14dp"
+                    android:paddingBottom="7dp"
+                    android:text="@string/location_title"
+                    android:textColor="@color/text_primary"
+                    android:textSize="13sp" />
             </com.google.android.material.card.MaterialCardView>
 
-            <TextView
-                android:id="@+id/tv_location_coords"
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textColor="@color/text_dark"
-                android:textSize="14sp" />
+                android:layout_marginTop="12dp">
 
-            <TextView
-                android:id="@+id/tv_location_address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textColor="@color/text_muted"
-                android:textSize="13sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <FrameLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/bg_icon_circle">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_pin"
+                            app:tint="@color/accent" />
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_location_address"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/location_detecting"
+                            android:textAppearance="@style/TextAppearance.CivicPin.Body"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/tv_location_coords"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:textAppearance="@style/TextAppearance.CivicPin.Footnote" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                style="@style/Widget.CivicPin.TextField.Dropdown"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="12dp"
                 android:hint="@string/locality_prompt">
 
                 <AutoCompleteTextView
@@ -324,74 +410,69 @@
                     android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_confirm_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:orientation="horizontal">
+                android:layout_marginTop="16dp"
+                android:text="@string/btn_confirm_location" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_confirm_location"
-                    android:layout_width="0dp"
-                    android:layout_height="52dp"
-                    android:layout_marginEnd="4dp"
-                    android:layout_weight="1"
-                    android:text="@string/btn_confirm_location"
-                    app:backgroundTint="@color/bengaluru_purple"
-                    app:cornerRadius="12dp" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_direct_email_draft"
-                    android:layout_width="0dp"
-                    android:layout_height="52dp"
-                    android:layout_marginStart="4dp"
-                    android:layout_weight="1"
-                    android:text="@string/btn_direct_email"
-                    app:backgroundTint="@color/leaf_green"
-                    app:cornerRadius="12dp" />
-            </LinearLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_direct_email_draft"
+                style="@style/Widget.CivicPin.Button.Text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/btn_direct_email" />
         </LinearLayout>
 
-        <!-- Step 4 Container: Department Routing & Details -->
+        <!-- Step 4: department + details -->
         <LinearLayout
             android:id="@+id/step4_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="22dp"
             android:orientation="vertical"
             android:visibility="gone">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/step_route"
-                android:textColor="@color/text_dark"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_dept_name"
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textColor="@color/bengaluru_purple"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tv_dept_verification"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textColor="@color/text_muted"
-                android:textSize="12sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="18dp">
 
-            <!-- Subtype Dropdown -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/suggested_department"
+                        android:textAppearance="@style/TextAppearance.CivicPin.Section" />
+
+                    <TextView
+                        android:id="@+id/tv_dept_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:textAppearance="@style/TextAppearance.CivicPin.Title"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/tv_dept_verification"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:textAppearance="@style/TextAppearance.CivicPin.Footnote" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                style="@style/Widget.CivicPin.TextField.Dropdown"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="14dp"
                 android:hint="@string/subtype_prompt">
 
                 <AutoCompleteTextView
@@ -401,12 +482,10 @@
                     android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Editable To Emails -->
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="10dp"
                 android:hint="@string/to_recipients">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -416,12 +495,10 @@
                     android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Editable CC Emails -->
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="10dp"
                 android:hint="@string/cc_recipients">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -431,66 +508,55 @@
                     android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- User Description input -->
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:hint="User Description / Notes">
+                android:layout_marginTop="10dp"
+                android:hint="@string/notes_hint">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_user_desc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:lines="3" />
+                    android:gravity="top"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:minLines="3" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_generate_email"
                 android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:layout_marginTop="12dp"
-                android:text="Generate Complaint Email"
-                app:backgroundTint="@color/bengaluru_purple"
-                app:cornerRadius="12dp" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/btn_generate_email"
+                app:icon="@drawable/ic_mail" />
         </LinearLayout>
 
-        <!-- Step 5 Container: Email Preview & Send Handoff -->
+        <!-- Step 5: email preview -->
         <LinearLayout
             android:id="@+id/step5_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="22dp"
             android:orientation="vertical"
             android:visibility="gone">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/email_preview_title"
-                android:textColor="@color/text_dark"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:hint="@string/email_subject_label">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_email_subject"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine|textCapSentences" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="10dp"
                 android:hint="@string/email_body_label">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -498,20 +564,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="top"
-                    android:minLines="10" />
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:lineSpacingExtra="3sp"
+                    android:minLines="10"
+                    android:textSize="15sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_open_email_app"
+                style="@style/Widget.CivicPin.Button.Accent"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/btn_open_email"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:backgroundTint="@color/leaf_green"
-                app:cornerRadius="12dp" />
+                app:icon="@drawable/ic_mail" />
         </LinearLayout>
 
     </LinearLayout>

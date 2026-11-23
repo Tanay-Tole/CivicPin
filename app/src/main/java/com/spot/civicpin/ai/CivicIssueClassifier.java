@@ -21,7 +21,7 @@ import java.util.Map;
 
 public class CivicIssueClassifier {
 
-    private static final String MODEL_FILE = "model_unquant.tflite";
+    private static final String MODEL_FILE = "civicpin_model.tflite";
     private static final String LABELS_FILE = "labels.txt";
 
     private final Interpreter interpreter;
@@ -80,7 +80,7 @@ public class CivicIssueClassifier {
         if (bitmap == null) {
             return new ClassificationResult("Others", getDisplayNameForLabel("Others"), 0.0f, new HashMap<>());
         }
-        Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, inputImageWidth, inputImageHeight, true);
+        Bitmap resizedBitmap = shrinkSmoothly(bitmap, inputImageWidth, inputImageHeight);
 
         ByteBuffer inputBuffer = ByteBuffer.allocateDirect(4 * inputImageWidth * inputImageHeight * numChannels);
         inputBuffer.order(ByteOrder.nativeOrder());
@@ -126,6 +126,18 @@ public class CivicIssueClassifier {
         String displayName = getDisplayNameForLabel(topLabel);
 
         return new ClassificationResult(topLabel, displayName, maxConfidence, probabilities);
+    }
+
+    /**
+     * Shrinks by halving first, so every source pixel is averaged in. A single createScaledBitmap from a
+     * 12 MP photo skips most pixels and gives a noisier image than the model saw in training (it lost accuracy).
+     */
+    static Bitmap shrinkSmoothly(Bitmap src, int w, int h) {
+        Bitmap cur = src;
+        while (cur.getWidth() >= 2 * w && cur.getHeight() >= 2 * h) {
+            cur = Bitmap.createScaledBitmap(cur, cur.getWidth() / 2, cur.getHeight() / 2, true);
+        }
+        return Bitmap.createScaledBitmap(cur, w, h, true);
     }
 
     public static String getDisplayNameForLabel(String internalLabel) {

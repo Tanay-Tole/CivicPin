@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
@@ -34,16 +35,9 @@ import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.textfield.TextInputEditText;
@@ -61,6 +55,14 @@ import com.spot.civicpin.location.CivicLocationManager;
 import com.spot.civicpin.location.LocationResult;
 import com.spot.civicpin.routing.CivicDepartmentRouter;
 import com.spot.civicpin.routing.DepartmentRoute;
+import com.spot.civicpin.ui.ReportAdapter;
+import com.spot.civicpin.ui.map.OsmMap;
+
+import org.osmdroid.events.MapEventsReceiver;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.MapEventsOverlay;
+import org.osmdroid.views.overlay.Marker;
 
 import java.io.File;
 import java.util.Arrays;
@@ -70,6 +72,8 @@ import java.util.Locale;
 public class ReportWizardFragment extends Fragment {
 
     private static final String TAG = "ReportWizardFragment";
+    public static final String ARG_MANUAL = "manual_mode";
+    private static final int[] STEP_TITLES = {R.string.step_photo, R.string.step_ai, R.string.step_location, R.string.step_route, R.string.step_email};
 
     private CivicReportRepository repository;
     private PhotoRepository photoRepository;
@@ -80,6 +84,8 @@ public class ReportWizardFragment extends Fragment {
     private CivicReportEntity currentReport;
 
     private LinearProgressIndicator wizardProgress;
+    private NestedScrollView wizardScroll;
+    private TextView tvWizardStep, tvWizardTitle;
 
     // Containers
     private LinearLayout step1Container, step2Container, step3Container, step4Container, step5Container;
@@ -94,10 +100,12 @@ public class ReportWizardFragment extends Fragment {
     private ProgressBar pbAiLoading;
     private TextView tvAiResult, tvAiConfidence, tvAiQuestion;
     private LinearLayout llCategorySelector;
+    private View aiIconBg, llAiActions;
+    private ImageView imgAiIcon;
 
     // Step 3
     private MapView mapView;
-    private GoogleMap googleMap;
+    private Marker pinMarker;
     private TextView tvLocationCoords, tvLocationAddress;
     private AutoCompleteTextView actvLocality;
 
@@ -151,6 +159,7 @@ public class ReportWizardFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        OsmMap.init(requireContext());
         View view = inflater.inflate(R.layout.fragment_report_wizard, container, false);
 
         repository = new CivicReportRepository(requireContext());
@@ -167,6 +176,9 @@ public class ReportWizardFragment extends Fragment {
         currentReport = new CivicReportEntity();
 
         wizardProgress = view.findViewById(R.id.wizard_progress);
+        wizardScroll = view.findViewById(R.id.wizard_scroll);
+        tvWizardStep = view.findViewById(R.id.tv_wizard_step);
+        tvWizardTitle = view.findViewById(R.id.tv_wizard_title);
 
         step1Container = view.findViewById(R.id.step1_container);
         step2Container = view.findViewById(R.id.step2_container);
@@ -206,9 +218,8 @@ public class ReportWizardFragment extends Fragment {
         btnSkipToManual.setOnClickListener(v -> {
             step1Container.setVisibility(View.GONE);
             step2Container.setVisibility(View.VISIBLE);
-            llCategorySelector.setVisibility(View.VISIBLE);
-            tvAiResult.setText("Fast Manual Reporting Mode");
-            tvAiConfidence.setText("Self-Category & Pin Selection");
+            setStep(2, step2Container);
+            showManualPicker();
         });
 
         // Step 2 init
@@ -217,12 +228,18 @@ public class ReportWizardFragment extends Fragment {
         tvAiConfidence = view.findViewById(R.id.tv_ai_confidence);
         tvAiQuestion = view.findViewById(R.id.tv_ai_question);
         llCategorySelector = view.findViewById(R.id.ll_category_selector);
+        aiIconBg = view.findViewById(R.id.ai_icon_bg);
+        imgAiIcon = view.findViewById(R.id.img_ai_icon);
+        llAiActions = view.findViewById(R.id.ll_ai_actions);
 
         MaterialButton btnAiConfirm = view.findViewById(R.id.btn_ai_confirm);
         MaterialButton btnAiChange = view.findViewById(R.id.btn_ai_change);
 
         btnAiConfirm.setOnClickListener(v -> goToStep3());
-        btnAiChange.setOnClickListener(v -> llCategorySelector.setVisibility(View.VISIBLE));
+        btnAiChange.setOnClickListener(v -> {
+            llCategorySelector.setVisibility(View.VISIBLE);
+            wizardScroll.post(() -> wizardScroll.smoothScrollTo(0, step2Container.getTop() + llCategorySelector.getTop()));
+        });
 
         view.findViewById(R.id.btn_cat_garbage).setOnClickListener(v -> selectManualCategory("Garbage"));
         view.findViewById(R.id.btn_cat_water).setOnClickListener(v -> selectManualCategory("Water_Leak_Sewer"));
@@ -231,12 +248,28 @@ public class ReportWizardFragment extends Fragment {
 
         // Step 3 init
         mapView = view.findViewById(R.id.map_view);
-        try {
-            MapsInitializer.initialize(requireContext().getApplicationContext(), MapsInitializer.Renderer.LATEST, null);
-            mapView.onCreate(savedInstanceState);
-        } catch (Exception e) {
-            Log.e(TAG, "Error in MapView onCreate", e);
-        }
+        OsmMap.setup(mapView);
+        mapView.getController().setZoom(11.5);
+        mapView.getController().setCenter(new GeoPoint(12.9716, 77.5946));
+        // Tapping the map drops the pin there, even when GPS never answers.
+        mapView.getOverlays().add(0, new MapEventsOverlay(new MapEventsReceiver() {
+            @Override
+            public boolean singleTapConfirmedHelper(GeoPoint p) {
+                placePin(p, false);
+                onUserPinned(p);
+                return true;
+            }
+
+            @Override
+            public boolean longPressHelper(GeoPoint p) {
+                return false;
+            }
+        }));
+        // The map sits inside a scroll view: let the map keep its own drag gestures.
+        mapView.setOnTouchListener((v, e) -> {
+            v.getParent().requestDisallowInterceptTouchEvent(true);
+            return false;
+        });
 
         tvLocationCoords = view.findViewById(R.id.tv_location_coords);
         tvLocationAddress = view.findViewById(R.id.tv_location_address);
@@ -276,7 +309,43 @@ public class ReportWizardFragment extends Fragment {
 
         view.findViewById(R.id.btn_open_email_app).setOnClickListener(v -> launchEmailApp());
 
+        setStep(1, null);
+        if (getArguments() != null && getArguments().getBoolean(ARG_MANUAL, false)) {
+            btnSkipToManual.performClick();
+        }
+
         return view;
+    }
+
+    /** Updates the header for step n (1..5) and fades the step's content in. */
+    private void setStep(int n, @Nullable View container) {
+        tvWizardStep.setText(getString(R.string.wizard_step, n));
+        tvWizardTitle.setText(STEP_TITLES[n - 1]);
+        wizardProgress.setProgressCompat(n * 20, true);
+        wizardScroll.scrollTo(0, 0);
+        if (container != null) {
+            container.setAlpha(0f);
+            container.setTranslationY(24f);
+            container.animate().alpha(1f).translationY(0f).setDuration(240).start();
+        }
+    }
+
+    private void showAiCategory(String category) {
+        imgAiIcon.setVisibility(View.VISIBLE);
+        imgAiIcon.setImageResource(ReportAdapter.iconFor(category));
+        imgAiIcon.setImageTintList(ColorStateList.valueOf(ReportAdapter.colorFor(requireContext(), category)));
+        aiIconBg.setBackgroundTintList(ColorStateList.valueOf(ReportAdapter.softColorFor(requireContext(), category)));
+    }
+
+    /** No photo to classify: the person picks the category themselves. */
+    private void showManualPicker() {
+        pbAiLoading.setVisibility(View.GONE);
+        imgAiIcon.setVisibility(View.VISIBLE);
+        tvAiResult.setText(R.string.ai_manual_title);
+        tvAiConfidence.setVisibility(View.GONE);
+        tvAiQuestion.setText(R.string.ai_manual_body);
+        llAiActions.setVisibility(View.GONE);
+        llCategorySelector.setVisibility(View.VISIBLE);
     }
 
     private void startCameraXPreview() {
@@ -342,13 +411,17 @@ public class ReportWizardFragment extends Fragment {
     private void goToStep2() {
         step1Container.setVisibility(View.GONE);
         step2Container.setVisibility(View.VISIBLE);
-        wizardProgress.setProgress(40);
+        setStep(2, step2Container);
 
         currentReport.imagePath = savedImagePath;
 
         if (classifier != null && capturedBitmap != null) {
             pbAiLoading.setVisibility(View.VISIBLE);
-            tvAiResult.setText("Analyzing image... Faster than Indiranagar rent rises! 🚀");
+            imgAiIcon.setVisibility(View.INVISIBLE);
+            llAiActions.setVisibility(View.INVISIBLE);
+            tvAiConfidence.setVisibility(View.INVISIBLE);
+            tvAiQuestion.setText(R.string.ai_is_correct);
+            tvAiResult.setText(R.string.ai_detecting);
             new Thread(() -> {
                 ClassificationResult result = classifier.classifyImage(capturedBitmap);
                 if (!isAdded() || getActivity() == null) return;
@@ -362,6 +435,9 @@ public class ReportWizardFragment extends Fragment {
 
                     tvAiResult.setText(getString(R.string.ai_detected, result.getDisplayName()));
                     tvAiConfidence.setText(getString(R.string.ai_confidence, result.getConfidencePercentage()));
+                    tvAiConfidence.setVisibility(View.VISIBLE);
+                    llAiActions.setVisibility(View.VISIBLE);
+                    showAiCategory(result.getInternalLabel());
 
                     if (result.getConfidence() < 0.75f || "Others".equals(result.getInternalLabel())) {
                         tvAiQuestion.setText(R.string.ai_low_confidence);
@@ -370,9 +446,7 @@ public class ReportWizardFragment extends Fragment {
                 });
             }).start();
         } else {
-            pbAiLoading.setVisibility(View.GONE);
-            tvAiResult.setText("Manual Mode Active. Select category below:");
-            llCategorySelector.setVisibility(View.VISIBLE);
+            showManualPicker();
         }
     }
 
@@ -380,6 +454,7 @@ public class ReportWizardFragment extends Fragment {
         currentReport.confirmedCategory = category;
         String displayName = CivicIssueClassifier.getDisplayNameForLabel(category);
         tvAiResult.setText(getString(R.string.ai_detected, displayName));
+        showAiCategory(category);
         llCategorySelector.setVisibility(View.GONE);
         goToStep3();
     }
@@ -387,7 +462,7 @@ public class ReportWizardFragment extends Fragment {
     private void goToStep3() {
         step2Container.setVisibility(View.GONE);
         step3Container.setVisibility(View.VISIBLE);
-        wizardProgress.setProgress(60);
+        setStep(3, step3Container);
 
         if (mapView != null) {
             mapView.onResume();
@@ -417,75 +492,14 @@ public class ReportWizardFragment extends Fragment {
                     currentReport.address = loc.address;
                     currentReport.locality = loc.locality;
 
-                    tvLocationCoords.setText(String.format(Locale.getDefault(), "Lat: %.5f, Lng: %.5f (Accuracy: %.1fm)", loc.latitude, loc.longitude, loc.accuracy));
+                    tvLocationCoords.setText(String.format(Locale.getDefault(), "%.5f, %.5f  ·  accurate to %.0f m", loc.latitude, loc.longitude, loc.accuracy));
                     tvLocationAddress.setText(loc.address != null ? loc.address : "Bengaluru, Karnataka");
 
                     if (loc.locality != null && actvLocality != null) {
                         actvLocality.setText(loc.locality, false);
                     }
 
-                    if (mapView != null && isGooglePlayServicesAvailable()) {
-                        try {
-                            mapView.getMapAsync(map -> {
-                                googleMap = map;
-                                LatLng pos = new LatLng(loc.latitude, loc.longitude);
-                                googleMap.clear();
-                                googleMap.addMarker(new MarkerOptions().position(pos).title("Report Location").draggable(true));
-                                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 15f));
-
-                                // Interactive Map Pinpoint on Click
-                                googleMap.setOnMapClickListener(latLng -> {
-                                    googleMap.clear();
-                                    googleMap.addMarker(new MarkerOptions().position(latLng).title("Self Pinned Location").draggable(true));
-                                    currentReport.latitude = latLng.latitude;
-                                    currentReport.longitude = latLng.longitude;
-                                    currentReport.locationSource = "USER_MAP_PIN";
-                                    tvLocationCoords.setText(String.format(Locale.getDefault(), "Lat: %.5f, Lng: %.5f (Self Pin)", latLng.latitude, latLng.longitude));
-
-                                    Location dummyLoc = new Location("USER_MAP_PIN");
-                                    dummyLoc.setLatitude(latLng.latitude);
-                                    dummyLoc.setLongitude(latLng.longitude);
-                                    locationManager.processLocation(dummyLoc, "USER_MAP_PIN", new CivicLocationManager.LocationCallback() {
-                                        @Override
-                                        public void onSuccess(LocationResult res) {
-                                            if (!isAdded() || getActivity() == null) return;
-                                            requireActivity().runOnUiThread(() -> {
-                                                if (!isAdded()) return;
-                                                currentReport.address = res.address;
-                                                currentReport.locality = res.locality;
-                                                tvLocationAddress.setText(res.address != null ? res.address : "Bengaluru, Karnataka");
-                                                if (res.locality != null && actvLocality != null) {
-                                                    actvLocality.setText(res.locality, false);
-                                                }
-                                            });
-                                        }
-
-                                        @Override
-                                        public void onFailure(String errorMsg) {}
-                                    });
-                                });
-
-                                googleMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
-                                    @Override
-                                    public void onMarkerDragStart(@NonNull com.google.android.gms.maps.model.Marker marker) {}
-
-                                    @Override
-                                    public void onMarkerDrag(@NonNull com.google.android.gms.maps.model.Marker marker) {}
-
-                                    @Override
-                                    public void onMarkerDragEnd(@NonNull com.google.android.gms.maps.model.Marker marker) {
-                                        LatLng newPos = marker.getPosition();
-                                        currentReport.latitude = newPos.latitude;
-                                        currentReport.longitude = newPos.longitude;
-                                        currentReport.locationSource = "USER_MAP_PIN";
-                                        tvLocationCoords.setText(String.format(Locale.getDefault(), "Lat: %.5f, Lng: %.5f (User Pin)", newPos.latitude, newPos.longitude));
-                                    }
-                                });
-                            });
-                        } catch (Exception e) {
-                            Log.e(TAG, "Error in getMapAsync", e);
-                        }
-                    }
+                    placePin(new GeoPoint(loc.latitude, loc.longitude), true);
                 });
             }
 
@@ -500,11 +514,64 @@ public class ReportWizardFragment extends Fragment {
         });
     }
 
-    private boolean isGooglePlayServicesAvailable() {
-        if (getContext() == null) return false;
-        GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
-        int resultCode = googleApiAvailability.isGooglePlayServicesAvailable(getContext());
-        return resultCode == ConnectionResult.SUCCESS;
+    /** Puts the report pin on the map; tapping the map or dragging the pin moves it. */
+    private void placePin(GeoPoint pos, boolean recenter) {
+        if (mapView == null || !isAdded()) return;
+        if (pinMarker == null) {
+            pinMarker = new Marker(mapView);
+            pinMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+            pinMarker.setInfoWindow(null);
+            pinMarker.setDraggable(true);
+            pinMarker.setOnMarkerDragListener(new Marker.OnMarkerDragListener() {
+                @Override
+                public void onMarkerDrag(Marker marker) {}
+
+                @Override
+                public void onMarkerDragStart(Marker marker) {}
+
+                @Override
+                public void onMarkerDragEnd(Marker marker) {
+                    onUserPinned(marker.getPosition());
+                }
+            });
+            mapView.getOverlays().add(pinMarker);
+        }
+        pinMarker.setIcon(OsmMap.pin(requireContext(), OsmMap.colorFor(requireContext(), currentReport.confirmedCategory)));
+        pinMarker.setPosition(pos);
+        if (recenter) {
+            mapView.getController().setZoom(16.5);
+            mapView.getController().setCenter(pos);
+        }
+        mapView.invalidate();
+    }
+
+    private void onUserPinned(GeoPoint p) {
+        currentReport.latitude = p.getLatitude();
+        currentReport.longitude = p.getLongitude();
+        currentReport.locationSource = "USER_MAP_PIN";
+        tvLocationCoords.setText(String.format(Locale.getDefault(), "%.5f, %.5f  ·  pinned by you", p.getLatitude(), p.getLongitude()));
+
+        Location pinned = new Location("USER_MAP_PIN");
+        pinned.setLatitude(p.getLatitude());
+        pinned.setLongitude(p.getLongitude());
+        locationManager.processLocation(pinned, "USER_MAP_PIN", new CivicLocationManager.LocationCallback() {
+            @Override
+            public void onSuccess(LocationResult res) {
+                if (!isAdded() || getActivity() == null) return;
+                requireActivity().runOnUiThread(() -> {
+                    if (!isAdded()) return;
+                    currentReport.address = res.address;
+                    currentReport.locality = res.locality;
+                    tvLocationAddress.setText(res.address != null ? res.address : "Bengaluru, Karnataka");
+                    if (res.locality != null && actvLocality != null) {
+                        actvLocality.setText(res.locality, false);
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(String errorMsg) {}
+        });
     }
 
     private void goToStep4() {
@@ -513,7 +580,7 @@ public class ReportWizardFragment extends Fragment {
         }
         step3Container.setVisibility(View.GONE);
         step4Container.setVisibility(View.VISIBLE);
-        wizardProgress.setProgress(80);
+        setStep(4, step4Container);
 
         DepartmentRoute route = departmentRouter.routeReport(currentReport.confirmedCategory, currentReport.locality, null);
         if (route != null) {
@@ -522,7 +589,7 @@ public class ReportWizardFragment extends Fragment {
             currentReport.ccEmails = route.ccEmails;
 
             tvDeptName.setText(route.departmentName);
-            tvDeptVerification.setText("Status: " + route.verificationStatus + " • " + route.notes);
+            tvDeptVerification.setText(route.verificationStatus.replace("_", " ").toLowerCase(Locale.ROOT) + "  ·  " + route.notes);
             etToEmails.setText(route.toEmails);
             etCcEmails.setText(route.ccEmails);
         }
@@ -545,7 +612,7 @@ public class ReportWizardFragment extends Fragment {
 
         step4Container.setVisibility(View.GONE);
         step5Container.setVisibility(View.VISIBLE);
-        wizardProgress.setProgress(100);
+        setStep(5, step5Container);
 
         repository.insertReport(currentReport, "Report created as DRAFT");
     }
@@ -592,16 +659,14 @@ public class ReportWizardFragment extends Fragment {
     private void resetWizard() {
         step5Container.setVisibility(View.GONE);
         step1Container.setVisibility(View.VISIBLE);
-        wizardProgress.setProgress(20);
+        setStep(1, step1Container);
         if (imgPreview != null) imgPreview.setImageDrawable(null);
         if (btnStep1Next != null) btnStep1Next.setEnabled(false);
+        capturedBitmap = null;
+        savedImagePath = null;
+        llCategorySelector.setVisibility(View.GONE);
+        llAiActions.setVisibility(View.VISIBLE);
         currentReport = new CivicReportEntity();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (mapView != null) mapView.onStart();
     }
 
     @Override
@@ -617,14 +682,10 @@ public class ReportWizardFragment extends Fragment {
     }
 
     @Override
-    public void onStop() {
-        if (mapView != null) mapView.onStop();
-        super.onStop();
-    }
-
-    @Override
     public void onDestroyView() {
-        if (mapView != null) mapView.onDestroy();
+        if (mapView != null) mapView.onDetach();
+        mapView = null;
+        pinMarker = null;
         super.onDestroyView();
     }
 
@@ -632,17 +693,5 @@ public class ReportWizardFragment extends Fragment {
     public void onDestroy() {
         if (classifier != null) classifier.close();
         super.onDestroy();
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if (mapView != null) mapView.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        if (mapView != null) mapView.onLowMemory();
     }
 }

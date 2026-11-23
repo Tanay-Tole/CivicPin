@@ -3,296 +3,286 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/warm_cream"
+    android:background="@color/bg"
     android:clipToPadding="false"
     android:fillViewport="true"
-    android:paddingTop="28dp">
+    android:overScrollMode="ifContentScrolls">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:paddingStart="20dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="28dp">
 
-        <!-- Header Card featuring New Bengaluru Civic Logo -->
-        <com.google.android.material.card.MaterialCardView
+        <!-- Header: greeting + large title, logo on the right -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_greeting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tagline"
+                    android:textAppearance="@style/TextAppearance.CivicPin.Subhead" />
+
+                <TextView
+                    android:id="@+id/tv_app_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_name"
+                    android:textAppearance="@style/TextAppearance.CivicPin.LargeTitle" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/img_skyline"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_marginBottom="4dp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_civic_pin_logo" />
+        </LinearLayout>
+
+        <!-- Hero: the one main action -->
+        <LinearLayout
             android:id="@+id/card_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/deep_indigo"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="4dp">
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_hero"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/home_hero_title"
+                android:textColor="@color/white"
+                android:textSize="28sp"
+                android:fontFamily="sans-serif"
+                android:textStyle="bold"
+                android:letterSpacing="-0.02"
+                android:lineSpacingExtra="2sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:alpha="0.72"
+                android:lineSpacingExtra="3sp"
+                android:text="@string/home_hero_body"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_report_issue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:text="@string/btn_report_issue"
+                android:textColor="#1D1D1F"
+                app:backgroundTint="@color/white"
+                app:icon="@drawable/ic_camera"
+                app:iconTint="#1D1D1F"
+                app:rippleColor="#22000000" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_fast_manual"
+                style="@style/Widget.CivicPin.Button.Text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/btn_fast_manual_report"
+                android:textColor="@color/white"
+                app:rippleColor="#22FFFFFF" />
+        </LinearLayout>
+
+        <!-- Overview stats -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="28dp"
+            android:text="@string/home_overview"
+            android:textAppearance="@style/TextAppearance.CivicPin.Section" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="18dp">
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:paddingTop="18dp"
+                android:paddingBottom="18dp">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <!-- App Logo Emblem -->
-                    <ImageView
-                        android:id="@+id/img_app_logo"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
-                        android:contentDescription="@string/app_name"
-                        android:src="@drawable/ic_civic_pin_logo" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tv_app_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/app_name"
-                            android:textColor="@color/white"
-                            android:textSize="22sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/tv_tagline"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="@string/tagline"
-                            android:textColor="@color/warm_cream"
-                            android:textSize="13sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/sub_tagline"
-                    android:textColor="#D0D0D0"
-                    android:textSize="13sp" />
-
-                <!-- Bengaluru Skyline Silhouette -->
-                <ImageView
-                    android:id="@+id/img_skyline"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
-                    android:contentDescription="@string/app_name"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_bengaluru_skyline" />
-
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- Main Action Buttons -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_report_issue"
-            android:layout_width="match_parent"
-            android:layout_height="58dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/btn_report_issue"
-            android:textColor="@color/white"
-            android:textSize="17sp"
-            android:textStyle="bold"
-            app:backgroundTint="@color/bengaluru_purple"
-            app:cornerRadius="14dp"
-            app:icon="@drawable/ic_report"
-            app:iconGravity="textStart"
-            app:iconPadding="8dp"
-            app:iconTint="@color/white" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_fast_manual"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/btn_fast_manual_report"
-            android:textColor="@color/white"
-            android:textSize="15sp"
-            app:backgroundTint="@color/leaf_green"
-            app:cornerRadius="12dp" />
-
-        <!-- Statistics Section -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Real-Time Dashboard Stats"
-            android:textColor="@color/text_dark"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:columnCount="2"
-            android:rowCount="3">
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_margin="4dp"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="2dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="12dp">
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/tv_stat_total"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
-                        android:textColor="@color/bengaluru_purple"
-                        android:textSize="22sp"
-                        android:textStyle="bold" />
+                        android:textAppearance="@style/TextAppearance.CivicPin.Stat" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/stat_total"
-                        android:textColor="@color/text_muted"
-                        android:textSize="12sp" />
+                        android:textAppearance="@style/TextAppearance.CivicPin.Footnote" />
                 </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
 
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_margin="4dp"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="2dp">
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/hairline" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="12dp">
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/tv_stat_drafts"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
-                        android:textColor="@color/status_draft"
-                        android:textSize="22sp"
-                        android:textStyle="bold" />
+                        android:textAppearance="@style/TextAppearance.CivicPin.Stat" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/stat_drafts"
-                        android:textColor="@color/text_muted"
-                        android:textSize="12sp" />
+                        android:textAppearance="@style/TextAppearance.CivicPin.Footnote" />
                 </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
 
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_margin="4dp"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="2dp">
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/hairline" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="12dp">
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/tv_stat_composer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
-                        android:textColor="@color/status_composer"
-                        android:textSize="22sp"
-                        android:textStyle="bold" />
+                        android:textAppearance="@style/TextAppearance.CivicPin.Stat" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/stat_composer"
-                        android:textColor="@color/text_muted"
-                        android:textSize="12sp" />
+                        android:textAppearance="@style/TextAppearance.CivicPin.Footnote" />
                 </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
 
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_margin="4dp"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="2dp">
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/hairline" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="12dp">
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/tv_stat_submitted"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
-                        android:textColor="@color/status_submitted"
-                        android:textSize="22sp"
-                        android:textStyle="bold" />
+                        android:textAppearance="@style/TextAppearance.CivicPin.Stat"
+                        android:textColor="@color/accent" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/stat_submitted"
-                        android:textColor="@color/text_muted"
-                        android:textSize="12sp" />
+                        android:textAppearance="@style/TextAppearance.CivicPin.Footnote" />
                 </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-        </GridLayout>
-
-        <!-- Recent Activity Section -->
+        <!-- Recent reports -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="28dp"
             android:text="@string/recent_activity"
-            android:textColor="@color/text_dark"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textAppearance="@style/TextAppearance.CivicPin.Section" />
 
-        <TextView
+        <LinearLayout
             android:id="@+id/tv_empty_recent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:gravity="center"
-            android:text="@string/no_recent_reports"
-            android:textColor="@color/text_muted"
-            android:textSize="14sp"
-            android:visibility="gone" />
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_map_overlay"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingStart="24dp"
+            android:paddingTop="28dp"
+            android:paddingEnd="24dp"
+            android:paddingBottom="28dp"
+            android:visibility="gone">
+
+            <FrameLayout
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:background="@drawable/bg_icon_circle">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_pin"
+                    app:tint="@color/text_secondary" />
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:text="@string/no_recent_reports"
+                android:textAppearance="@style/TextAppearance.CivicPin.Subhead" />
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_recent_reports"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             android:nestedScrollingEnabled="false" />
 
     </LinearLayout>

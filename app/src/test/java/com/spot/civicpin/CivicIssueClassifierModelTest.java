@@ -36,4 +36,15 @@ public class CivicIssueClassifierModelTest {
         assertNotNull(result);
         assertEquals("Others", result.getInternalLabel());
     }
+
+    @Test
+    public void testOwnModelIsBundledAndOldOneIsGone() throws Exception {
+        java.io.File assets = new java.io.File("src/main/assets");
+        java.io.File model = new java.io.File(assets, "civicpin_model.tflite");
+        assertEquals(true, model.isFile() && model.length() > 500_000);
+        assertEquals(false, new java.io.File(assets, "model_unquant.tflite").exists());
+        // the model has 4 outputs, in this order
+        assertEquals(java.util.List.of("0 Garbage", "1 Water_Leak_Sewer", "2 Potholes", "3 Others"),
+                java.nio.file.Files.readAllLines(new java.io.File(assets, "labels.txt").toPath()));
+    }
 }

@@ -4,9 +4,9 @@ This manifest documents all test cases for verifying the Civic Pin application.
 
 | Test ID | Category | Preconditions | Test Steps | Expected Result | Status | Notes |
 |---|---|---|---|---|---|---|
-| AI-001 | AI | `model_unquant.tflite` present | Initialize `CivicIssueClassifier` | Model loads without exception | PASS | Verified in Unit/Runtime |
+| AI-001 | AI | `civicpin_model.tflite` present | Initialize `CivicIssueClassifier` | Model loads without exception | PASS | Verified in Unit/Runtime |
 | AI-002 | AI | `labels.txt` present | Load labels in `CivicIssueClassifier` | Preserves 4 exact labels in order | PASS | Verified |
-| AI-003 | AI | Model loaded | Inspect input tensor | Shape (1, 224, 224, 3) | PASS | Verified |
+| AI-003 | AI | Model loaded | Inspect input tensor | Shape (1, 128, 128, 3) | PASS | Verified |
 | AI-004 | AI | Model loaded | Inspect output tensor | Shape (1, 4) | PASS | Verified |
 | AI-005 | AI | Model classifier test | Run `CivicIssueClassifierModelTest` | Label & probability data structure verified | PASS | Verified |
 | AI-006 | AI | Sample image | Classify garbage image | Prediction probability returned | PASS | Verified |
