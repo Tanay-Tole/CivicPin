@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -119,6 +120,8 @@ public class ReportWizardFragment extends Fragment {
 
     private Bitmap capturedBitmap;
     private String savedImagePath;
+    /** Where a gallery photo was taken, from its GPS tag; null for camera shots or untagged photos. */
+    private double[] photoLatLng;
 
     private final ActivityResultLauncher<String> cameraPermissionLauncher = registerForActivityResult(
             new ActivityResultContracts.RequestPermission(),
@@ -136,6 +139,10 @@ public class ReportWizardFragment extends Fragment {
             result -> {
                 if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null && result.getData().getData() != null) {
                     Uri selectedUri = result.getData().getData();
+                    photoLatLng = photoRepository.readPhotoLatLong(selectedUri);
+                    if (photoLatLng == null) {
+                        Toast.makeText(requireContext(), "This photo has no saved location. You can set the spot on the map in step 3.", Toast.LENGTH_LONG).show();
+                    }
                     savedImagePath = photoRepository.processAndSaveImage(selectedUri);
                     if (savedImagePath != null) {
                         capturedBitmap = BitmapFactory.decodeFile(savedImagePath);
@@ -149,6 +156,12 @@ public class ReportWizardFragment extends Fragment {
                     }
                 }
             }
+    );
+
+    // Opens the gallery whatever the answer; without it photos just come without GPS.
+    private final ActivityResultLauncher<String> mediaLocationPermissionLauncher = registerForActivityResult(
+            new ActivityResultContracts.RequestPermission(),
+            granted -> openGallery()
     );
 
     private final ActivityResultLauncher<String[]> locationPermissionLauncher = registerForActivityResult(
@@ -206,11 +219,11 @@ public class ReportWizardFragment extends Fragment {
         btnSnapPhoto.setOnClickListener(v -> snapPhotograph());
 
         btnSelectGallery.setOnClickListener(v -> {
-            try {
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                galleryLauncher.launch(intent);
-            } catch (Exception e) {
-                Toast.makeText(requireContext(), "Gallery unavailable. Use fast manual report.", Toast.LENGTH_SHORT).show();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
+                    && ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_MEDIA_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                mediaLocationPermissionLauncher.launch(Manifest.permission.ACCESS_MEDIA_LOCATION);
+            } else {
+                openGallery();
             }
         });
 
@@ -375,6 +388,15 @@ public class ReportWizardFragment extends Fragment {
         }, ContextCompat.getMainExecutor(requireContext()));
     }
 
+    private void openGallery() {
+        try {
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            galleryLauncher.launch(intent);
+        } catch (Exception e) {
+            Toast.makeText(requireContext(), "Gallery unavailable. Use fast manual report.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void snapPhotograph() {
         if (imageCapture == null) return;
         File photoFile = photoRepository.createPhotoFile();
@@ -384,6 +406,7 @@ public class ReportWizardFragment extends Fragment {
             @Override
             public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
                 if (!isAdded()) return;
+                photoLatLng = null; // taken right here, so the phone's GPS is the right spot
                 savedImagePath = photoFile.getAbsolutePath();
                 capturedBitmap = BitmapFactory.decodeFile(savedImagePath);
 
@@ -469,7 +492,12 @@ public class ReportWizardFragment extends Fragment {
             mapView.requestLayout();
         }
 
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (photoLatLng != null) {
+            Location fromPhoto = new Location("PHOTO_EXIF");
+            fromPhoto.setLatitude(photoLatLng[0]);
+            fromPhoto.setLongitude(photoLatLng[1]);
+            locationManager.processLocation(fromPhoto, "PHOTO_EXIF", showLocation);
+        } else if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             locationPermissionLauncher.launch(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION});
         } else {
             fetchLocationAndSetupMap();
@@ -477,7 +505,11 @@ public class ReportWizardFragment extends Fragment {
     }
 
     private void fetchLocationAndSetupMap() {
-        locationManager.getCurrentLocation(new CivicLocationManager.LocationCallback() {
+        locationManager.getCurrentLocation(showLocation);
+    }
+
+    /** Fills step 3 (pin, coordinates, address, locality) from a phone GPS or photo location. */
+    private final CivicLocationManager.LocationCallback showLocation = new CivicLocationManager.LocationCallback() {
             @Override
             public void onSuccess(LocationResult loc) {
                 if (!isAdded() || getActivity() == null) return;
@@ -492,7 +524,9 @@ public class ReportWizardFragment extends Fragment {
                     currentReport.address = loc.address;
                     currentReport.locality = loc.locality;
 
-                    tvLocationCoords.setText(String.format(Locale.getDefault(), "%.5f, %.5f  ·  accurate to %.0f m", loc.latitude, loc.longitude, loc.accuracy));
+                    String how = "PHOTO_EXIF".equals(loc.source) ? "from photo"
+                            : String.format(Locale.getDefault(), "accurate to %.0f m", loc.accuracy);
+                    tvLocationCoords.setText(String.format(Locale.getDefault(), "%.5f, %.5f  ·  %s", loc.latitude, loc.longitude, how));
                     tvLocationAddress.setText(loc.address != null ? loc.address : "Bengaluru, Karnataka");
 
                     if (loc.locality != null && actvLocality != null) {
@@ -511,8 +545,7 @@ public class ReportWizardFragment extends Fragment {
                     Toast.makeText(requireContext(), errorMsg, Toast.LENGTH_SHORT).show();
                 });
             }
-        });
-    }
+    };
 
     /** Puts the report pin on the map; tapping the map or dragging the pin moves it. */
     private void placePin(GeoPoint pos, boolean recenter) {
@@ -664,6 +697,7 @@ public class ReportWizardFragment extends Fragment {
         if (btnStep1Next != null) btnStep1Next.setEnabled(false);
         capturedBitmap = null;
         savedImagePath = null;
+        photoLatLng = null;
         llCategorySelector.setVisibility(View.GONE);
         llAiActions.setVisibility(View.VISIBLE);
         currentReport = new CivicReportEntity();

@@ -8,6 +8,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 public class BengaluruLocalityResolverTest {
@@ -25,6 +26,17 @@ public class BengaluruLocalityResolverTest {
         String match3 = BengaluruLocalityResolver.findBestMatch("ITPL Main Road, Whitefield");
         assertNotNull(match3);
         assertTrue(match3.contains("Whitefield"));
+    }
+
+    @Test
+    public void halliAddressesAreNotIndiranagar() {
+        assertEquals("Yelahanka (New & Old Town)", BengaluruLocalityResolver.findBestMatch(
+                "Doddaballapur Main Rd, Avalahalli, Yelahanka, Bengaluru, Karnataka 560064"));
+        assertNull(BengaluruLocalityResolver.findBestMatch("Kodihalli, Bengaluru"));
+        assertEquals("Indiranagar / Domlur / HAL", BengaluruLocalityResolver.findBestMatch(
+                "HAL 2nd Stage, Indiranagar, Bengaluru"));
+        assertEquals("JP Nagar (Phases 1 to 9)", BengaluruLocalityResolver.findBestMatch(
+                "7th Phase, JP Nagar, Bengaluru"));
     }
 
     @Test

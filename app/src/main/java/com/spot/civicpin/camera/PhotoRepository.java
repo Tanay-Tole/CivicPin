@@ -1,12 +1,17 @@
 package com.spot.civicpin.camera;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.net.Uri;
+import android.os.Build;
+import android.provider.MediaStore;
 import android.util.Log;
 
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.exifinterface.media.ExifInterface;
 
@@ -79,6 +84,27 @@ public class PhotoRepository {
             return photoFile.getAbsolutePath();
         } catch (Throwable t) {
             Log.e(TAG, "Error processing image safely from URI", t);
+            return null;
+        }
+    }
+
+    /** GPS saved in the photo as {lat, lng}, or null when it has none (or Android hid it from us). */
+    public double[] readPhotoLatLong(Uri uri) {
+        if (uri == null) return null;
+        Uri source = uri;
+        // Android 10+ blanks the GPS tag of gallery photos unless we ask for the original file.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && MediaStore.AUTHORITY.equals(uri.getAuthority())
+                && ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_MEDIA_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            source = MediaStore.setRequireOriginal(uri);
+        }
+        try (InputStream is = context.getContentResolver().openInputStream(source)) {
+            if (is == null) return null;
+            double[] latLng = new ExifInterface(is).getLatLong();
+            // 0,0 is what a blanked tag reads as, not a real place.
+            if (latLng == null || (latLng[0] == 0.0 && latLng[1] == 0.0)) return null;
+            return latLng;
+        } catch (Throwable t) {
+            Log.w(TAG, "Could not read photo location", t);
             return null;
         }
     }
