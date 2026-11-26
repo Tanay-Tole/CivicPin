@@ -5,6 +5,7 @@ import android.location.Address;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class BengaluruLocalityResolver {
 
@@ -42,7 +43,8 @@ public class BengaluruLocalityResolver {
     );
 
     private static final List<String> GENERIC_WORDS = Arrays.asList(
-            "road", "layout", "nagar", "town", "phases", "phase", "new", "old", "block", "stage", "sector", "main"
+            "road", "layout", "nagar", "town", "phases", "phase", "new", "old", "block", "stage", "sector", "main",
+            "city", "street", "airport", "commercial", "brigade"
     );
 
     public static String resolveLocality(Address address) {
@@ -80,8 +82,9 @@ public class BengaluruLocalityResolver {
         for (String known : KNOWN_LOCALITIES) {
             String[] parts = known.split("[/,]");
             for (String part : parts) {
-                String cleanPart = part.replaceAll("[\\(\\)]", "").trim().toLowerCase();
-                if (cleanPart.length() >= 3 && !GENERIC_WORDS.contains(cleanPart) && lower.contains(cleanPart)) {
+                // "JP Nagar (Phases 1 to 9)" -> "jp nagar"
+                String cleanPart = part.replaceAll("\\(.*?\\)", "").trim().toLowerCase();
+                if (cleanPart.length() >= 3 && !GENERIC_WORDS.contains(cleanPart) && containsWord(lower, cleanPart)) {
                     return known;
                 }
             }
@@ -92,12 +95,17 @@ public class BengaluruLocalityResolver {
             String[] words = known.split("[/\\(\\),\\s]+");
             for (String word : words) {
                 String cleanWord = word.trim().toLowerCase();
-                if (cleanWord.length() >= 3 && !GENERIC_WORDS.contains(cleanWord) && lower.contains(cleanWord)) {
+                if (cleanWord.length() >= 3 && !GENERIC_WORDS.contains(cleanWord) && containsWord(lower, cleanWord)) {
                     return known;
                 }
             }
         }
         return null;
+    }
+
+    // Whole words only: a plain substring check put every "...halli" address in "HAL" (Indiranagar).
+    private static boolean containsWord(String text, String word) {
+        return Pattern.compile("\\b" + Pattern.quote(word) + "\\b").matcher(text).find();
     }
 
     public static List<String> searchLocalities(String query) {
